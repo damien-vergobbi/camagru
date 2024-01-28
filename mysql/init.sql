@@ -1,35 +1,34 @@
 CREATE TABLE IF NOT EXISTS users (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  email VARCHAR(255) NOT NULL UNIQUE,
-  username VARCHAR(128) NOT NULL UNIQUE,
-  password VARCHAR(255) NOT NULL,
-  verification_token VARCHAR(255) NOT NULL UNIQUE,
-  is_verified TINYINT(1) DEFAULT 0,
-  email_notification TINYINT(1) DEFAULT 1
+  user_id INT AUTO_INCREMENT PRIMARY KEY,
+  user_email VARCHAR(255) NOT NULL UNIQUE,
+  user_name VARCHAR(128) NOT NULL UNIQUE,
+  user_pass VARCHAR(255) NOT NULL,
+  user_token VARCHAR(255) NOT NULL UNIQUE,
+  user_verfied TINYINT(1) DEFAULT 0
 );
 
--- CREATE TABLE IF NOT EXISTS posts (
---   id INT AUTO_INCREMENT PRIMARY KEY,
---   created_at DATETIME DEFAULT NOW(),
---   user_id INT NOT NULL,
---   image VARCHAR(255) NOT NULL,
---   FOREIGN KEY (user_id) REFERENCES users(id)
--- );
+CREATE TABLE IF NOT EXISTS posts (
+  post_id INT AUTO_INCREMENT PRIMARY KEY,
+  post_date DATETIME DEFAULT NOW(),
+  post_user_id INT NOT NULL,
+  post_image VARCHAR(255) NOT NULL,
+  FOREIGN KEY (post_user_id) REFERENCES users(user_id)
+);
 
--- CREATE TABLE IF NOT EXISTS comments (
---   id INT AUTO_INCREMENT PRIMARY KEY,
---   user_id INT NOT NULL,
---   post_id INT NOT NULL,
---   comment VARCHAR(255) NOT NULL,
---   FOREIGN KEY (user_id) REFERENCES users(id),
---   FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
--- );
+CREATE TABLE IF NOT EXISTS comments (
+  comment_id INT AUTO_INCREMENT PRIMARY KEY,
+  comment_user_id INT NOT NULL,
+  comment_post_id INT NOT NULL,
+  comment_text VARCHAR(255) NOT NULL,
+  FOREIGN KEY (comment_user_id) REFERENCES users(user_id),
+  FOREIGN KEY (comment_post_id) REFERENCES posts(post_id) ON DELETE CASCADE
+);
 
--- CREATE TABLE IF NOT EXISTS likes (
---   id INT AUTO_INCREMENT PRIMARY KEY,
---   user_id INT NOT NULL,
---   post_id INT NOT NULL,
---   FOREIGN KEY (user_id) REFERENCES users(id),
---   FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
---   UNIQUE KEY user_post_unique (user_id, post_id)
--- );
+CREATE TABLE IF NOT EXISTS likes (
+  like_id INT AUTO_INCREMENT PRIMARY KEY,
+  like_user_id INT NOT NULL,
+  like_post_id INT NOT NULL,
+  FOREIGN KEY (like_user_id) REFERENCES users(user_id),
+  FOREIGN KEY (like_post_id) REFERENCES posts(post_id) ON DELETE CASCADE,
+  UNIQUE KEY user_post_unique (like_user_id, like_post_id)
+);
