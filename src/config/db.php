@@ -20,7 +20,10 @@ $dbPassword = getenv('DB_PASS');
 
 // Retourne une connexion à la base de données
 try {
-  return new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPassword);
+  $pdo = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPassword);
+  $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  return $pdo;
 } catch (PDOException $e) {
   echo 'Erreur de connexion : ' . $e->getMessage();
   return null;
