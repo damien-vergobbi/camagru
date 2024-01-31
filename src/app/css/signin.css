@@ -5,8 +5,11 @@ main {
   align-items: center;
   flex-wrap: wrap-reverse;
 
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100vw;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   color: #333;
 }
@@ -50,8 +53,16 @@ main .main-div .signup-div {
 
 main h1 {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   font-family: "Lobster", sans-serif;
+}
+
+h2 {
+  font-size: 1rem;
+  font-weight: normal;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-family: "Roboto", sans-serif;
 }
 
 main .main-div input {
@@ -64,11 +75,19 @@ main .main-div input {
   outline: none;
   background-color: #F8F8FF;
 
-  transition: all ease-in-out 0.3s;
+  transition: border ease-in-out 0.3s;
 }
 
 main .main-div input:focus {
   border: 1px solid #9d9d9d;
+}
+
+main .main-div input.is-invalid {
+  border: 1px solid #ff0000;
+  background-image: url("../media/icon-error.png");
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  background-size: 20px;
 }
 
 main .main-div button {
@@ -85,9 +104,39 @@ main .main-div button {
   text-align: center;
   cursor: pointer;
 
-  transition: all ease-in-out 0.3s;
+  transition: background-color ease-in-out 0.3s;
 }
 
 main .main-div button:hover {
   background-color: #5F9BE3;
+}
+
+main .main-div button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+main .loader-wrapper {
+  width: 100%;
+  margin-top: 1rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+main form p {
+  /* Error */
+  color: #ff0000;
+  font-size: 0.8rem;
+  margin: 0.1rem 0 0.5rem 0;
+}
+main form p:empty {
+  display: none;
+}
+main #success-log {
+  /* Success */
+  color: #333;
+  font-size: 1rem;
+  text-align: center;
 }

@@ -2,8 +2,8 @@
 session_start();
 session_destroy();
 
-// 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
-
+$email = $_GET['email'] ?? '';
+$token = $_GET['token'] ?? '';
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +11,7 @@ session_destroy();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camagru - Sign Up</title>
+    <title>Camagru - Confirm account</title>
 
     <link rel="stylesheet" href="../app/css/global.css">
     
@@ -20,34 +20,42 @@ session_destroy();
 </head>
 <body>
     <main>
+        <div class="side-div">
+            <img
+                src="https://via.placeholder.com/350"
+                alt="Logo Camagru"    
+            >
+        </div>
+
         <div class="main-div">
             <div class="form-div">
                 <h1>Camagru</h1>
 
                 <h2>
-                    Sign up to see photos and videos from your friends.
+                    Recover your password to access your account.
                 </h2>
                 
-                <form id="signup-form">
+                <form id="confirm-form">
                     <input
                         placeholder="Email"
-                        type="email"
+                        type="text"
                         id="email"
                         name="email"
+                        value="<?= $email ?>"
                         required
+                        readonly
                     >
-                    <p id="email-error"></p>
 
                     <input
-                        placeholder="Username"
+                        placeholder="Token"
                         type="text"
-                        id="username"
-                        name="username"
-                        minlength="3"
-                        maxlength="30"
+                        id="token"
+                        name="token"
+                        value="<?= $token ?>"
                         required
+                        readonly
+                        hidden
                     >
-                    <p id="username-error"></p>
 
                     <input
                         placeholder="Password"
@@ -71,21 +79,23 @@ session_destroy();
                     >
                     <p id="confirm-password-error"></p>
                     <p id="log-error"></p>
+                    <p id="success-log" class="hidden">
+                        Password successfully updated.
+                    </p>
 
-                    <button id="submit-btn" type="submit">Sign up</button>
+                    <button type="submit" id="submit-btn">
+                        Update password
+                    </button>
+
                     <div id="loader-wrapper" class="loader-wrapper hidden">
                         <div class="loader"></div>
                     </div>
-
-                    <p id="success-log" class="hidden">
-                        An email has been sent to you. Please confirm your account.
-                    </p>
                 </form>
             </div>
             
             <div class="signup-div">
                 <p>
-                    Already have an account ? <a href="signin.php">Sign in</a>
+                  If you are not redirected <a href="signin.php">Sign in</a>
                 </p>
             </div>
         </div>
@@ -93,8 +103,8 @@ session_destroy();
     
 
 
-    <!-- Load script from ../app/js/singup.js -->
+    <!-- Load script from ../app/js/singin.js -->
     <script src="../app/js/utils.js" defer></script>
-    <script src="../app/js/signup.js" defer></script>
+    <script src="../app/js/recover.js" defer></script>
 </body>
 </html>

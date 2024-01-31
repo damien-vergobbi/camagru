@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS users (
   user_name VARCHAR(128) NOT NULL UNIQUE,
   user_pass VARCHAR(255) NOT NULL,
   user_token VARCHAR(255) NOT NULL UNIQUE,
-  user_verfied TINYINT(1) DEFAULT 0
+  user_verified TINYINT(1) DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS posts (

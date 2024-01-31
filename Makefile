@@ -14,4 +14,8 @@ tail:
 down:
 	docker-compose -p $(NAME) -f $(YML_FILE) down
 
+clean:
+	docker system prune -af
+	docker volume prune -f
+
 .PHONY: all dev down devdown

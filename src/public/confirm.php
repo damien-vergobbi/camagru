@@ -1,6 +1,9 @@
 <? // Logout user
 session_start();
 session_destroy();
+
+$email = $_GET['email'] ?? '';
+$token = $_GET['token'] ?? '';
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +11,7 @@ session_destroy();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camagru - Sign In</title>
+    <title>Camagru - Confirm account</title>
 
     <link rel="stylesheet" href="../app/css/global.css">
     
@@ -29,50 +32,46 @@ session_destroy();
                 <h1>Camagru</h1>
 
                 <h2>
-                    Sign in to see photos and videos from your friends.
+                    Sign up to see photos and videos from your friends.
                 </h2>
                 
-                <form id="signin-form">
+                <form id="confirm-form">
                     <input
-                        placeholder="Email / Username"
+                        placeholder="Email"
                         type="text"
-                        id="username"
-                        name="username"
-                        minlength="3"
-                        maxlength="90"
+                        id="email"
+                        name="email"
+                        value="<?= $email ?>"
                         required
-                    >
-                    <input
-                        placeholder="Password"
-                        type="password"
-                        id="password"
-                        name="password"
-                        minlength="6"
-                        maxlength="30"
-                        required
+                        readonly
                     >
 
-                    <p id="confirm-password-error"></p>
+                    <input
+                        placeholder="Token"
+                        type="text"
+                        id="token"
+                        name="token"
+                        value="<?= $token ?>"
+                        required
+                        readonly
+                        hidden
+                    >
+
                     <p id="log-error"></p>
 
-                    <button id="submit-btn" type="submit">Sign in</button>
+                    <button type="submit" id="submit-btn">
+                      Confirm account
+                    </button>
+
                     <div id="loader-wrapper" class="loader-wrapper hidden">
                         <div class="loader"></div>
                     </div>
-
-                    <p id="success-log" class="hidden">
-                        An email has been sent to you. Click on the link to recover your password.
-                    </p>
-
-                    <a href="#" id="recover-link" class="littleLink">
-                        Forgot password ?
-                    </a>
                 </form>
             </div>
             
             <div class="signup-div">
                 <p>
-                    Don't have an account ? <a href="signup.php">Sign up</a>
+                  If you are not redirected <a href="signin.php">Sign in</a>
                 </p>
             </div>
         </div>
@@ -80,8 +79,8 @@ session_destroy();
     
 
 
-    <!-- Load script from ../app/js/signin.js -->
-    <script src="../app/js/utils.js" async></script>
-    <script src="../app/js/signin.js" async></script>
+    <!-- Load script from ../app/js/singin.js -->
+    <script src="../app/js/utils.js" defer></script>
+    <script src="../app/js/confirm.js" defer></script>
 </body>
 </html>
