@@ -98,7 +98,7 @@ if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,30}$/', $password)
 // Update password
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-$up = $pdo->prepare("UPDATE users SET user_pass = :user_pass, user_token = :token WHERE user_id = :id");
+$up = $pdo->prepare("UPDATE users SET user_pass = :user_pass, user_token = :token, user_verified = 1 WHERE user_id = :id");
 $up->execute(['user_pass' => $hashedPassword, 'token' => $token, 'id' => $stmt['user_id']]);
 
 echo json_encode([
