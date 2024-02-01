@@ -1,0 +1,132 @@
+nav {
+  background-color: #fff;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+nav .nav-wrapper {
+  height: 60px;
+  line-height: 60px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+
+nav .nav-wrapper ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: row;
+}
+
+nav .nav-wrapper ul li {
+  list-style: none;
+  margin: 1rem;
+}
+
+nav .nav-wrapper ul li a,
+nav .nav-wrapper .user-settings a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+
+  color: #444;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0 1rem;
+  text-decoration: none;
+
+  border-bottom: 2px solid transparent;
+
+  transition: all 0.4s ease-in-out;
+}
+
+nav .nav-wrapper ul li a:hover,
+nav .nav-wrapper .user-settings a:hover {
+  color: #000;
+  font-weight: 700;
+  border-bottom: 2px solid #000;
+}
+
+/* ===== Buttons ===== */
+nav .brand-logo {
+  color: #444;
+  font-size: 2rem;
+  font-weight: 500;
+  text-decoration: none;
+  font-family: "Lobster", sans-serif;
+}
+
+nav img {
+  height: 25px;
+  width: 25px;
+  object-fit: contain;
+  margin-right: 0.5rem;
+}
+
+nav .user-settings {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+nav .nav-wrapper .user-settings a.settings {
+  color: #5F9BE3;
+  text-transform: uppercase;
+}
+nav .nav-wrapper .user-settings a.settings:hover {
+  border-bottom: 2px solid #5F9BE3;
+}
+nav .nav-wrapper .user-settings a.settings img {
+  filter: invert(73%) sepia(35%) saturate(5849%) hue-rotate(187deg) brightness(94%) contrast(88%);
+}
+
+nav .nav-wrapper .user-settings a.sign-out {
+  color: #ff0000;
+}
+nav .nav-wrapper .user-settings a.sign-out:hover {
+  border-bottom: 2px solid #ff0000;
+}
+nav .nav-wrapper .user-settings a.sign-out img {
+  margin-right: 0;
+  margin-left: 0.5rem;
+  height: 20px;
+  filter: invert(14%) sepia(96%) saturate(7244%) hue-rotate(2deg) brightness(104%) contrast(115%);
+}
+
+nav .nav-wrapper a.sign-in {
+  color: #5F9BE3;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0 1rem;
+  text-decoration: none;
+
+  border-bottom: 2px solid transparent;
+
+  transition: all 0.4s ease-in-out;
+}
+nav .nav-wrapper a.sign-in:hover {
+  border-bottom: 2px solid #5F9BE3;
+}
+nav .nav-wrapper a.sign-in img {
+  margin-right: 0;
+  margin-left: 0.5rem;
+  /* height: 20px; */
+  filter: invert(73%) sepia(35%) saturate(5849%) hue-rotate(187deg) brightness(94%) contrast(88%);
+}

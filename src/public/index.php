@@ -13,8 +13,14 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Camagru</title>
+
+    <link rel="stylesheet" href="../app/css/global.css">
+    
+    <!-- Load style from ../app/css/signin.css -->
+    <link rel="stylesheet" href="../app/css/navbar.css">
 </head>
 <body>
+    <? require_once 'components/navbar.php'; ?>
 
     <h1>Welcome to my camagru</h1>
 
@@ -29,7 +35,5 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
     <?php else: ?>
         <p>You are not logged in</p>
     <?php endif; ?>
-
-    
 </body>
 </html>
