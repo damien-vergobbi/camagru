@@ -18,6 +18,18 @@ nav .nav-wrapper {
   flex-direction: row;
 }
 
+nav .nav-wrapper .sidenav {
+  height: 60px;
+  line-height: 60px;
+  width: 100%;
+  margin-left: 2rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+
 nav .nav-wrapper ul {
   margin: 0;
   padding: 0;
@@ -32,6 +44,7 @@ nav .nav-wrapper ul li {
   margin: 1rem;
 }
 
+nav a.mobile-sign-out,
 nav .nav-wrapper ul li a,
 nav .nav-wrapper .user-settings a {
   display: flex;
@@ -98,12 +111,15 @@ nav .nav-wrapper .user-settings a.settings img {
   filter: invert(73%) sepia(35%) saturate(5849%) hue-rotate(187deg) brightness(94%) contrast(88%);
 }
 
+nav a.mobile-sign-out,
 nav .nav-wrapper .user-settings a.sign-out {
   color: #ff0000;
 }
+nav a.mobile-sign-out:hover,
 nav .nav-wrapper .user-settings a.sign-out:hover {
   border-bottom: 2px solid #ff0000;
 }
+nav a.mobile-sign-out img,
 nav .nav-wrapper .user-settings a.sign-out img {
   margin-right: 0;
   margin-left: 0.5rem;
@@ -136,4 +152,54 @@ nav .nav-wrapper a.sign-in img {
   margin-left: 0.5rem;
   /* height: 20px; */
   filter: invert(73%) sepia(35%) saturate(5849%) hue-rotate(187deg) brightness(94%) contrast(88%);
+}
+
+/* Hide .sidenav-trigger on desktop */
+nav .nav-wrapper .sidenav-trigger {
+  display: none;
+}
+
+/* Mobile */
+@media screen and (max-width: 992px) {
+  nav .nav-wrapper .sidenav-trigger {
+    display: block;
+  }
+
+  nav .nav-wrapper ul,
+  nav .user-settings {
+    flex-direction: column;
+    margin-top: 2rem;
+  }
+
+  nav .nav-wrapper ul li {
+    margin: 0;
+  }
+
+  nav .nav-wrapper .sidenav {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    z-index: 1;
+    height: fit-content;
+    width: 100%;
+    overflow: auto;
+    margin-left: 0;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  nav .nav-wrapper .sidenav {
+    display: flex !important;
+  }
+
+  nav .mobile-sign-out {
+    display: none;
+  }
+
+  nav .nav-wrapper .sidenav-trigger {
+    display: none;
+  }
 }
