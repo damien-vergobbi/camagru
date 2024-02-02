@@ -1,0 +1,103 @@
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  height: auto;
+  width: 100%;
+  max-width: 100vw;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding-top: 3rem;
+
+  color: #333;
+}
+
+main .item-div {
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  
+  width: 350px;
+  height: auto;
+  margin: 1rem;
+  padding: 0;
+
+  border: 1px solid #ccc;
+}
+
+main .item-div img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px 10px 0 0;
+}
+
+main .item-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+}
+
+main .item-footer div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+}
+
+main .item-footer div img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  margin-right: 0.5rem;
+}
+
+main .item-footer .footer-end {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+main .item-footer .footer-end div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+main .item-footer .footer-end div:first-child {
+  margin-right: 1rem;
+}
+
+/* Infinite Scroll */
+.infinite-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  height: auto;
+  width: 500px;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+.infinite-wrapper .loader-wrapper {
+  width: 500px;
+  overflow: hidden;
+
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}

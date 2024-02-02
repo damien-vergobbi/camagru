@@ -18,22 +18,15 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
     
     <!-- Load style from ../app/css/signin.css -->
     <link rel="stylesheet" href="../app/css/navbar.css">
+    <link rel="stylesheet" href="../app/css/main.css">
 </head>
 <body>
     <? require_once 'components/navbar.php'; ?>
 
-    <h1>Welcome to my camagru</h1>
+    <main>
 
-    <?php if (IS_LOGGED): ?>
-        <a href="signin.php">Logout</a>
-    <?php else: ?>
-        <a href="signin.php">Signin</a>
-    <?php endif; ?>
+        <? require_once 'components/public-list.php'; ?>
 
-    <?php if (IS_LOGGED): ?>
-        <p>You are logged in</p>
-    <?php else: ?>
-        <p>You are not logged in</p>
-    <?php endif; ?>
+    </main>
 </body>
 </html>
