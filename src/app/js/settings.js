@@ -99,8 +99,7 @@ document.getElementById("settings-form").addEventListener("submit", function(eve
 
                     const text = JSON.parse(xhr.responseText);
 
-
-                    if (xhr.status === 200 && text?.status === "success") {
+                    if (text?.status === "success") {
                         // Success
                         document.getElementById("success-log").classList.remove("hidden");
                     } else {
@@ -121,8 +120,6 @@ document.getElementById("settings-form").addEventListener("submit", function(eve
                 }
             } catch (e) {
                 console.error(e);
-
-                document.getElementById("log-error").innerHTML = "An error occurred. Please try again.";
 
                 // Enable submit button
                 document.getElementById("submit-btn").disabled = false;

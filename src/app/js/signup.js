@@ -60,22 +60,51 @@ document.getElementById("signup-form").addEventListener("submit", function(event
     document.getElementById("submit-btn").disabled = true;
     document.getElementById("submit-btn").classList.add("hidden");
 
-    // Send request with AJAX
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/scripts/signup.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            const text = JSON.parse(xhr.responseText);
+    try {
+        // Send request with AJAX
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "/scripts/signup.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+                try {
+                    if (xhr.readyState === XMLHttpRequest.UNSENT) {
+                        // Error
+                        document.getElementById("log-error").innerHTML = "An error occurred. Please try again.";
+                        return;
+                    }
 
-            console.log(xhr.responseText);
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        // Stop loader
+                        document.getElementById("loader-wrapper").classList.add("hidden");
 
-            if (xhr.status === 200 && text?.status === "success") {
-                // Success
-                document.getElementById("success-log").classList.remove("hidden");
-            } else {
-                // Error
-                console.error(xhr.responseText);
+                        if (xhr.status !== 200) {
+                            // Error
+                            document.getElementById("log-error").innerHTML = "An error occurred. Please try again.";
+                            return;
+                        }
+
+                        console.log(xhr.responseText);
+
+                        const text = JSON.parse(xhr.responseText);
+
+                    if (xhr.status === 200 && text?.status === "success") {
+                        // Success
+                        document.getElementById("success-log").classList.remove("hidden");
+                    } else {
+                        if (text?.message && !text?.field) {
+                            document.getElementById("log-error").innerHTML = text.message;
+                        }
+
+                        if (text?.field) {
+                            document.getElementById(text.field).classList.add("is-invalid");
+                            document.getElementById(text.field + "-error").innerHTML = text.message;
+                        }
+
+                        throw new Error(text.message || xhr.responseText);
+                    }
+                } 
+            } catch (error) {
+                console.error(error);
 
                 // Enable submit button
                 document.getElementById("submit-btn").disabled = false;
@@ -83,22 +112,21 @@ document.getElementById("signup-form").addEventListener("submit", function(event
 
                 // Stop loader
                 document.getElementById("loader-wrapper").classList.add("hidden");
-
-                if (text?.message && !text?.field) {
-                    document.getElementById("log-error").innerHTML = text.message;
-                }
-
-                if (text?.field) {
-                    document.getElementById(text.field).classList.add("is-invalid");
-                    document.getElementById(text.field + "-error").innerHTML = text.message;
-                }
             }
+        };
+        xhr.send("email=" + encodeURIComponent(email) + "&username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password));
+    } catch (e) {
+        console.error(e);
 
-            // Stop loader
-            document.getElementById("loader-wrapper").classList.add("hidden");
-        }
-    };
-    xhr.send("email=" + encodeURIComponent(email) + "&username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password));
+        document.getElementById("log-error").innerHTML = "An error occurred. Please try again.";
+
+        // Enable submit button
+        document.getElementById("submit-btn").disabled = false;
+        document.getElementById("submit-btn").classList.remove("hidden");
+
+        // Stop loader
+        document.getElementById("loader-wrapper").classList.add("hidden");
+    }
 });
 
 // Clear error on input change

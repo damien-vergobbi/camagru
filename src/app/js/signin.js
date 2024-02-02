@@ -37,23 +37,40 @@ document.getElementById("signin-form").addEventListener("submit", function(event
     document.getElementById("submit-btn").disabled = true;
     document.getElementById("submit-btn").classList.add("hidden");
 
-    // Send request with AJAX
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/scripts/signin.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
+    try {
+        // Send request with AJAX
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "/scripts/signin.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
             try {
-                console.log(xhr.responseText);
-                const text = JSON.parse(xhr.responseText);
-
-                if (xhr.status === 200 && text?.status === "success") {
-                    // Success
-                    window.location.href = "index.php";
-                    console.log(xhr.responseText);
-                } else {
+                if (xhr.readyState === XMLHttpRequest.UNSENT) {
                     // Error
-                    throw new Error(JSON.parse(xhr.responseText).message || xhr.responseText);
+                    document.getElementById("log-error").innerHTML = "An error occurred. Please try again.";
+                    return;
+                }
+
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    // Stop loader
+                    document.getElementById("loader-wrapper").classList.add("hidden");
+
+                    if (xhr.status !== 200) {
+                        // Error
+                        document.getElementById("log-error").innerHTML = "An error occurred. Please try again.";
+                        return;
+                    }
+
+                    console.log(xhr.responseText);
+
+                    const text = JSON.parse(xhr.responseText);
+
+                    if (text?.status === "success") {
+                        // Success
+                        window.location.href = "index.php";
+                    } else {
+                        // Error
+                        throw new Error(JSON.parse(xhr.responseText).message || xhr.responseText);
+                    }
                 }
             } catch (error) {
                 console.error(error);
@@ -61,7 +78,7 @@ document.getElementById("signin-form").addEventListener("submit", function(event
                 if (error?.message) {
                     document.getElementById("log-error").innerHTML = error?.message;
                 }
-            } finally {
+
                 // Enable submit button
                 document.getElementById("submit-btn").disabled = false;
                 document.getElementById("submit-btn").classList.remove("hidden");
@@ -69,9 +86,20 @@ document.getElementById("signin-form").addEventListener("submit", function(event
                 // Stop loader
                 document.getElementById("loader-wrapper").classList.add("hidden");
             }
-        }
-    };
-    xhr.send("username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password));
+        };
+        xhr.send("username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password));
+    } catch (e) {
+        console.error(e);
+
+        document.getElementById("log-error").innerHTML = "An error occurred. Please try again.";
+
+        // Enable submit button
+        document.getElementById("submit-btn").disabled = false;
+        document.getElementById("submit-btn").classList.remove("hidden");
+
+        // Stop loader
+        document.getElementById("loader-wrapper").classList.add("hidden");
+    }
 });
 
 // Clear error on input change
@@ -104,40 +132,69 @@ document.getElementById("recover-link").addEventListener("click", function(event
     document.getElementById("recover-link").disabled = true;
     document.getElementById("recover-link").classList.add("hidden");
 
-     // Send request with AJAX
-     const xhr = new XMLHttpRequest();
-     xhr.open("POST", "/scripts/recover.php", true);
-     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-     xhr.onreadystatechange = function() {
-         if (xhr.readyState === XMLHttpRequest.DONE) {
-             try {
-                 console.log(xhr.responseText);
-                 const text = JSON.parse(xhr.responseText);
- 
-                 if (xhr.status === 200 && text?.status === "success") {
-                    // Success
-                    document.getElementById("success-log").classList.remove("hidden");
-                 } else {
+    try {
+        // Send request with AJAX
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "/scripts/recover.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            try {
+                if (xhr.readyState === XMLHttpRequest.UNSENT) {
                     // Error
-                    throw new Error(JSON.parse(xhr.responseText).message || xhr.responseText);
-                 }
-             } catch (error) {
+                    document.getElementById("log-error").innerHTML = "An error occurred. Please try again.";
+                    return;
+                }
+
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    // Stop loader
+                    document.getElementById("loader-wrapper").classList.add("hidden");
+
+                    if (xhr.status !== 200) {
+                        // Error
+                        document.getElementById("log-error").innerHTML = "An error occurred. Please try again.";
+                        return;
+                    }
+
+                    console.log(xhr.responseText);
+
+                    const text = JSON.parse(xhr.responseText);
+
+                    if (xhr.status === 200 && text?.status === "success") {
+                        // Success
+                        document.getElementById("success-log").classList.remove("hidden");
+                    } else {
+                        // Error
+                        throw new Error(JSON.parse(xhr.responseText).message || xhr.responseText);
+                    }
+                } 
+            } catch (error) {
                 console.error(error);
 
-                document.getElementById("success-log").classList.add("hidden");
-
-                if (error?.message) {
-                    document.getElementById("log-error").innerHTML = error?.message;
-                }
-             } finally {
                 // Enable submit button
                 document.getElementById("recover-link").disabled = false;
                 document.getElementById("recover-link").classList.remove("hidden");
 
                 // Stop loader
                 document.getElementById("loader-wrapper").classList.add("hidden");
-             }
-         }
-     };
-     xhr.send("email=" + encodeURIComponent(username));
+
+                document.getElementById("success-log").classList.add("hidden");
+
+                if (error?.message) {
+                    document.getElementById("log-error").innerHTML = error?.message;
+                }
+            }
+        };
+        xhr.send("email=" + encodeURIComponent(username));
+    } catch (e) {
+        console.error(e);
+
+        document.getElementById("log-error").innerHTML = "An error occurred. Please try again.";
+
+        // Enable submit button
+        document.getElementById("recover-link").disabled = false;
+        document.getElementById("recover-link").classList.remove("hidden");
+
+        // Stop loader
+        document.getElementById("loader-wrapper").classList.add("hidden");
+    }
 });
