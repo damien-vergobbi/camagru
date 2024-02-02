@@ -196,7 +196,7 @@ nav .nav-wrapper .sidenav-trigger {
   }
 
   nav .mobile-sign-out {
-    display: none;
+    display: none !important;
   }
 
   nav .nav-wrapper .sidenav-trigger {
