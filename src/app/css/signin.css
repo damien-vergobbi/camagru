@@ -140,3 +140,22 @@ main #success-log {
   font-size: 1rem;
   text-align: center;
 }
+
+main form div.mails {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+
+  margin-bottom: 1rem;
+}
+
+main form div.mails label {
+  width: fit-content;
+  margin-right: 0.5rem;
+}
+
+main form div.mails input {
+  width: fit-content;
+}

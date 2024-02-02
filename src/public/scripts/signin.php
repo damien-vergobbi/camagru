@@ -70,8 +70,7 @@ try {
     $_SESSION['user_id'] = $user['user_id'];
     $_SESSION['user_name'] = $user['user_name'];
     $_SESSION['user_email'] = $user['user_email'];
-    $_SESSION['user_verified'] = $user['user_verified'];
-    $_SESSION['user_mails'] = $user['user_mails'];
+    $_SESSION['user_mails'] = $user['user_mails'] === 1;
 
     echo json_encode([
         'status' => 'success',
