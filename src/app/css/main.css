@@ -47,7 +47,18 @@ main .item-footer {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.5rem;
+  padding: 1rem 1.5rem; 
+}
+
+main .item-footer > div:first-of-type p {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+
+  width: 100%;
+  max-width: 175px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 main .item-footer div {
@@ -55,7 +66,6 @@ main .item-footer div {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-
 }
 
 main .item-footer div img {
@@ -107,4 +117,23 @@ main .item-footer .footer-end div:first-child {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  main {
+    padding-top: 1rem;
+  }
+
+  main .item-div {
+    width: 90%;
+  }
+
+  .infinite-wrapper {
+    width: 100%;
+  }
+
+  .infinite-wrapper .loader-wrapper {
+    width: 100%;
+  }
+  
 }

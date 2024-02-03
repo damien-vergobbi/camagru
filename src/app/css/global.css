@@ -10,8 +10,8 @@
 }
 
 html, body {
-  height: 100%;
-  width: 100%;
+  /* height: 100%;
+  width: 100%; */
 }
 
 a {
@@ -64,6 +64,30 @@ a.littleLink {
   width: fit-content;
 }
 
+#scroll-mode.lefter {
+  left: 10%;
+}
+
+@media screen and (max-width: 768px) {
+  #scroll-mode {
+    position: unset;
+    top: unset;
+    left: unset;
+    transform: unset;
+
+    width: 100%;
+    margin-top: 1rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+  }
+  /* #scroll-mode.lefter {
+    left: 60%;
+  } */
+}
+
 #scroll-mode img {
   width: 20px;
   height: 20px;
@@ -77,6 +101,10 @@ a.littleLink {
   justify-content: center;
   align-items: center;
   color: #333;
+  background-color: #fff;
+
+  /* Single line, dont break */
+  white-space: nowrap;
 
   padding: 0.5rem;
   margin: 0.5rem;

@@ -1,5 +1,16 @@
 main .item-div {
   transition: unset;
+  width: 500px;
+}
+
+@media screen and (max-width: 768px) {
+  main .item-div {
+    width: 90%;
+  }
+
+  main .item-div img {
+    width: 100%;
+  }
 }
 
 main .item-div:hover {
@@ -10,7 +21,7 @@ main .item-div:hover {
 main .item-div p.not-logged {
   font-size: 1rem;
   text-align: center;
-  padding-bottom: 1rem;
+  padding: 1rem;
 }
 
 main #comments {
@@ -42,7 +53,8 @@ main #comment_form {
 
 main #comment_form textarea {
   width: 100%;
-  min-height: 1rem;
+  min-height: 2rem;
+  max-height: 10rem;
   margin: 1rem;
   padding: 1rem;
   border: 1px solid #ccc;
@@ -110,6 +122,44 @@ main #comments_list .comment:not(:last-of-type) {
 
 main #comments_list .comment p.user {
   font-weight: bold;
+  font-size: 0.8rem;
   padding-bottom: 0.5rem;
   text-transform: uppercase;
+  align-items: center;
+}
+
+main #share-div {
+  width: 100%;
+  padding: 1rem 1.5rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+main #share-div a {
+  width: 30px;
+  height: auto;
+  margin: 0 0.5rem;
+  background-color: transparent;
+}
+
+main #share-div img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 0;
+  background-color: transparent;
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+
+main #share-div img:hover {
+  transform: scale(1.1);
 }
