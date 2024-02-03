@@ -7,8 +7,6 @@ $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $elementsByPage = 5;
 $offset = ($page - 1) * $elementsByPage;
 
-$total = $pdo->query('SELECT COUNT(*) FROM posts')->fetchColumn();
-
 // Get the elements for the current page
 $stmt = $pdo->prepare('SELECT posts.*, 
                               users.user_name AS post_user_name,
@@ -25,12 +23,6 @@ $stmt->bindValue(':limit', $elementsByPage, PDO::PARAM_INT);
 $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 $stmt->execute();
 $images = $stmt->fetchAll();
-
-// Check if all the elements have been loaded
-if ($total > $elementsByPage && $total < $elementsByPage * $page + count($images) + 1) {
-    echo json_encode("end");
-    return;
-}
 
 $list = [];
 

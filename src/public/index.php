@@ -22,6 +22,7 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
 </head>
 <body>
     <? require_once 'components/navbar.php'; ?>
+    <? require_once 'components/scroll-mode.php'; ?>
 
     <main>
 

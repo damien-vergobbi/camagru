@@ -1,8 +1,7 @@
 <?php
 
 function renderItem($id, $url, $username, $likes, $comments) {
-  echo '<a href="/post.php?id='.$id.'">';
-  echo '<div class="item-div">';
+  echo '<a href="/post.php?id='.$id.'" id="post-'.$id.'" class="item-div" title="Click to see this post from '.$username.'">';
   echo '<img src="' . $url . '" alt="Logo Camagru">';
   echo '<div class="item-footer">';
   echo '<div>';
@@ -17,7 +16,6 @@ function renderItem($id, $url, $username, $likes, $comments) {
   echo '<div>';
   echo '<img src="../app/media/icon-comment.png" alt="Like" height="20">';
   echo '<p>' . $comments . '</p>';
-  echo '</div>';
   echo '</div>';
   echo '</div>';
   echo '</div>';

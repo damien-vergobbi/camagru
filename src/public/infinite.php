@@ -22,6 +22,7 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
 </head>
 <body>
     <? require_once 'components/navbar.php'; ?>
+    <? require_once 'components/scroll-mode.php'; ?>
 
     <div class="infinite-wrapper">
         <main></main>
@@ -62,8 +63,11 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
         };
 
         const renderItem = (id, url, username, likes, comments) => {
-            const itemDiv = document.createElement('div');
+            const itemDiv = document.createElement('a');
+            itemDiv.href = `/post.php?id=${id}`;
             itemDiv.classList.add('item-div');
+            itemDiv.id = `post-${id}`;
+            itemDiv.title = `Click to see this post from ${username}`;
 
             const img = document.createElement('img');
             img.src = url;
@@ -118,17 +122,11 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
             commentP.textContent = comments;
             commentDiv.appendChild(commentP);
 
-
-            // Create main wrapper 'a'
-            const a = document.createElement('a');
-            a.href = `/post.php?id=${id}`;
-            a.appendChild(itemDiv);
-
             // Append to main list
             if (main.lastElementChild?.id === 'loader-wrapper') {
-                main.insertBefore(a, main.lastElementChild);
+                main.insertBefore(itemDiv, main.lastElementChild);
             } else {
-                main.appendChild(a);
+                main.appendChild(itemDiv);
             }
         };
 
@@ -149,12 +147,10 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
                         throw new Error('Erreur lors du chargement');
                     }
 
-                    console.log('Chargement terminé', xhr.responseText);
                     const elements = JSON.parse(xhr.responseText);
+                    const current = document.querySelectorAll('.item-div').length;
 
-                    console.log(page, 'Elements chargés :', elements);
-
-                    if (elements === 'end') {
+                    if (current > 0 && elements.length === 0) {
                         page = 1;
                         hideLoader();
                         loadMore();
