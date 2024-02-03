@@ -5,3 +5,6 @@ const username_regex = /^(?=.*[a-z])[a-z0-9_-]{3,30}$/i;
 
 // Password at least 6 characters, 1 uppercase, 1 lowercase, 1 number
 const password_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,30}$/;
+
+// Comment regex : Letters (maj, min and accents), numbers, spaces, and punctuation
+const comment_regex = /^[a-zA-Z0-9\s.,;:!?'-éèàêâîôûùç]{3,150}$/;

@@ -83,6 +83,17 @@ main #comment_form button:hover {
   transform: scale(1.05);
 }
 
+main #comment_form button:disabled {
+  background-color: #ccc;
+  border: 1px solid #ccc;
+  cursor: not-allowed;
+}
+
+main #comment_form button:disabled:hover {
+  box-shadow: none;
+  transform: none;
+}
+
 main #comments_list,
 main #comments_list .comment  {
   width: 100%;
