@@ -73,6 +73,15 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
       </div>
     </div>
 
+
+    <aside id="scroll-mode">
+      <a href="index.php" id="back-to-feed">
+        <img src="../../app/media/icon-pages.png" height="30" />
+        Back to feed
+      </a>
+    </aside>
+
+
     <script>
       let isLoading = false;
       let postId = window.location.search.split('=')[1];
@@ -104,7 +113,6 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
       };
 
       function loadMore($postId) {
-        console.log('Chargement en cours');
         if (isLoading) {
           return;
         }
@@ -119,9 +127,7 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
               throw new Error('Erreur lors du chargement');
             }
 
-            console.log('Chargement terminé', xhr.responseText);
             const infos = JSON.parse(xhr.responseText);
-
 
             if (!infos || infos.length === 0) {
               hideLoader();
@@ -166,7 +172,7 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
                   const commentDiv = document.createElement('div');
                   commentDiv.className = 'comment';
                   commentDiv.innerHTML = `
-                    <p>
+                    <p class="user">
                       <img src="../app/media/icon-user.png" alt="User" height="20" width="20">
                       ${comment.comment_user_name}
                     </p>
@@ -186,17 +192,32 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
           } catch (e) {
               console.error('Erreur lors du chargement :', e);
               hideLoader();
-            }
-          };
-          xhr.onerror = function() {
-            console.error('Erreur réseau lors du chargement.');
-            hideLoader();
-          };
-          xhr.send();
-        }
+          }
+        };
+        xhr.onerror = function() {
+          console.error('Erreur réseau lors du chargement.');
+          hideLoader();
+        };
+        xhr.send();
+      }
 
-        // Load datas
-        loadMore();
+      // Load datas
+      loadMore();
+
+      // Go back to feed
+      const backToFeed = document.querySelector('#back-to-feed');
+      if (backToFeed) {
+        backToFeed.addEventListener('click', function(e) {
+          e.preventDefault();
+
+          // Go previous page if possible
+          if (window.history.length > 1) {
+            window.history.back();
+          } else {
+            window.location.href = 'index.php';
+          }
+        });
+      }      
     </script>
 </body>
 </html>

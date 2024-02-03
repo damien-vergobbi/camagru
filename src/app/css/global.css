@@ -51,8 +51,9 @@ a.littleLink {
 
 #scroll-mode {
   position: fixed;
-  top: 100px;
-  left: 80px;
+  top: 50%;
+  left: 20%;
+  transform: translateY(-50%);
   z-index: 5;
   cursor: pointer;
 
@@ -60,7 +61,7 @@ a.littleLink {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 40px;
+  width: fit-content;
 }
 
 #scroll-mode img {
@@ -71,6 +72,7 @@ a.littleLink {
 }
 
 #scroll-mode a {
+  width: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
