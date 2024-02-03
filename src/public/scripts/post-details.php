@@ -3,7 +3,7 @@ session_start();
 // Get id
 $post_id = $_GET['id'];
 
-var_dump($_SESSION);
+$IsLogged = isset($_SESSION['user_id']);
 
 try {
   $pdo = require_once '../../config/db.php';
@@ -47,8 +47,8 @@ try {
 
   echo json_encode([
     'post' => $post,
-    'comments' => $comments,
-    'likes' => $likes
+    'comments' => $IsLogged ? $comments : [],
+    'likes' => $likes,
   ]);
 } catch (PDOException $e) {
   echo json_encode([

@@ -1,0 +1,70 @@
+main .item-div {
+  transition: unset;
+}
+
+main .item-div:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transform: unset
+}
+
+main .item-div p.not-logged {
+  font-size: 1rem;
+  text-align: center;
+  padding-bottom: 1rem;
+}
+
+main #comments {
+  margin-top: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+main #comments h2 {
+  margin-bottom: 1rem;
+}
+
+main #comment_form {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+main #comment_form textarea {
+  width: 100%;
+  min-height: 1rem;
+  margin: 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+}
+
+main #comment_form button {
+  margin: 1rem;
+  padding: 0.5rem 1rem;
+
+  outline: none;
+  border: 1px solid #5F9BE3;
+  border-radius: 5px;
+
+  color: #fff;
+  font-weight: bold;
+  background-color: #5F9BE3;
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+main #comment_form button:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
+main #comments_list .comment {
+  background-color: blue;
+}

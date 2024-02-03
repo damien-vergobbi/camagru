@@ -19,6 +19,7 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
     <!-- Load style from ../app/css/signin.css -->
     <link rel="stylesheet" href="../app/css/navbar.css">
     <link rel="stylesheet" href="../app/css/main.css">
+    <link rel="stylesheet" href="../app/css/post.css">
 </head>
 <body>
     <? require_once 'components/navbar.php'; ?>
@@ -45,18 +46,24 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
             </div>
           </div>
 
-          <div id="comments">
-            <h2>Comments</h2>
-            <div id="comments_list">
-              <p>Loading comments...</p>
-            </div>
+          <?php if (IS_LOGGED): ?>
+            <div id="comments">
+              <h2>Comments</h2>
+              <div id="comments_list">
+                <p>Loading comments...</p>
+              </div>
 
-            <form id="comment_form" action="/scripts/comment.php" method="post">
-              <input type="hidden" name="post_id" value="0">
-              <textarea name="comment" id="comment" placeholder="Write a comment..."></textarea>
-              <button type="submit">Send</button>
-            </form>
-          </div>
+              <form id="comment_form" action="/scripts/comment.php" method="post">
+                <textarea name="comment" id="comment" placeholder="Write a comment..."></textarea>
+                <button type="submit">Send</button>
+              </form>
+            </div>
+          <?php else: ?>
+            <p class="not-logged">
+              <a href="signin.php">Sign in</a>
+              to like or comment
+            </p>
+          <?php endif; ?>
         </div>
 
       </main>
@@ -157,16 +164,20 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
                 commentsList.innerHTML = '';
                 comments.forEach(comment => {
                   const commentDiv = document.createElement('div');
+                  commentDiv.className = 'comment';
                   commentDiv.innerHTML = `
-                    <p>${comment.comment_user_name}</p>
-                    <p>${comment.comment_content}</p>
+                    <p>
+                      <img src="../app/media/icon-user.png" alt="User" height="20" width="20">
+                      ${comment.comment_user_name}
+                    </p>
+                    <p>${comment.comment_text}</p>
                   `;
                   commentsList.appendChild(commentDiv);
                 });
               }
 
-              if (comments.length === 0) {
-                commentsList.innerHTML = '<p>No comments yet</p>';
+              if (commentsList && comments.length === 0) {
+                commentsList.innerHTML = '<p>No comments yet.</p>';
               }
             } else {
               console.error('Erreur lors du chargement :', xhr.status);
