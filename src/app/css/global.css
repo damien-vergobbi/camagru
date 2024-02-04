@@ -69,6 +69,7 @@ a.littleLink {
     top: unset;
     left: unset;
     transform: unset;
+    z-index: unset;
 
     width: 100%;
     margin-top: 1rem;

@@ -5,6 +5,24 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
     && isset($_SESSION['user_name'])
     && isset($_SESSION['user_email']));
 
+// Chemin vers le fichier .env
+$envFile = __DIR__ . '/../.env';
+
+if (file_exists($envFile)) {
+  $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+  foreach ($lines as $line) {
+    if (strpos($line, '=') !== false) {
+      list($key, $value) = explode('=', $line, 2);
+      $key = trim($key);
+      $value = trim($value);
+
+      // Remove " from value
+      $value = str_replace('"', '', $value);
+      putenv("$key=$value");
+    }
+  }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -15,6 +33,12 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
     <title>Camagru</title>
 
     <link rel="stylesheet" href="../app/css/global.css">
+
+    <!-- Meta data for sharing -->
+    <meta property="og:title" content="Camagru" />
+    <meta property="og:description" content="Share your life with Camagru" />
+    <meta property="og:image" content="http://<?= getenv('SERVER_IP') ?>:80/app/media/icon-user.png" />
+    <meta property="og:url" content="http://<?= getenv('SERVER_IP') ?>:80/public/post.php" />
     
     <!-- Load style from ../app/css/signin.css -->
     <link rel="stylesheet" href="../app/css/navbar.css">
@@ -57,12 +81,16 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
 
           <div id="share-div">
             <p>Share this post</p>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>" target="_blank">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode('http://' . getenv('SERVER_IP') . $_SERVER['REQUEST_URI']); ?>" target="_blank">
               <img src="../app/media/logo-facebook.svg" alt="Facebook" height="20">
             </a>
 
-            <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?php echo urlencode('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>" target="_blank">
-              <img src="../app/media/logo-linkedin.png" alt="Linkedin" height="20">
+            <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode('http://' . getenv('SERVER_IP') . $_SERVER['REQUEST_URI']); ?>&text=Check%20this%20post%20on%20Camagru" target="_blank">
+              <img src="../app/media/logo-x.avif" alt="Twitter" height="20">
+            </a>
+
+            <a href="whatsapp://send?text=<?php echo urlencode('Check this post on Camagru: http://' . getenv('SERVER_IP') . $_SERVER['REQUEST_URI']); ?>" target="_blank">
+              <img src="../app/media/logo-whatsapp.webp" alt="Whatsapp" height="20">
             </a>
 
             <a href="mailto:?subject=Camagru Share&body=See this post : <?php echo urlencode('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>">
@@ -73,6 +101,7 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
           <?php if (IS_LOGGED): ?>
             <div id="comments">
               <h2>Comments</h2>
+
               <div id="comments_list">
                 <p>Loading comments...</p>
               </div>
