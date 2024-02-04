@@ -58,16 +58,21 @@ try {
   require_once '../PHPMailer/mails.php';
 
   // Get post user
-  $stmt = $pdo->prepare('SELECT user_email, user_name
+  $stmt = $pdo->prepare('SELECT user_email, user_name, user_mails
                         FROM users
                         WHERE user_id = :user_id');
   $stmt->bindValue(':user_id', $post['post_user_id'], PDO::PARAM_INT);
   $stmt->execute();
   $post_user = $stmt->fetch();
 
+  if (!$post_user) {
+    throw new Exception('Post user not found');
+  }
 
-  // Send mail
-  sendCommentMail($post_user['user_email'], $post_user['user_name'], $post_id, $post['post_image'], $_SESSION['user_name'], $comment);
+  if (intval($post_user['user_mails']) === 1) {
+    // Send mail
+    sendCommentMail($post_user['user_email'], $post_user['user_name'], $post_id, $post['post_image'], $_SESSION['user_name'], $comment);
+  }
 
   echo json_encode([
     'success' => 'Comment added'
