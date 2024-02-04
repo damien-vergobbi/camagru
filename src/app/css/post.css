@@ -94,6 +94,10 @@ main #comment_form button:disabled:hover {
   transform: none;
 }
 
+main #comment_form .loader {
+  margin-bottom: 1rem;
+}
+
 main #comments_list,
 main #comments_list .comment  {
   width: 100%;
@@ -106,6 +110,11 @@ main #comments_list .comment  {
 
 main #comments_list  {
   padding: 0 1rem;
+  height: auto;
+  max-height: 300px;
+
+  overflow-y: auto;
+
 }
 
 main #comments_list .comment img {

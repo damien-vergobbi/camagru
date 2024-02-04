@@ -55,6 +55,20 @@ try {
   $stmt->bindValue(':comment', $comment, PDO::PARAM_STR);
   $stmt->execute();
 
+  require_once '../PHPMailer/mails.php';
+
+  // Get post user
+  $stmt = $pdo->prepare('SELECT user_email, user_name
+                        FROM users
+                        WHERE user_id = :user_id');
+  $stmt->bindValue(':user_id', $post['post_user_id'], PDO::PARAM_INT);
+  $stmt->execute();
+  $post_user = $stmt->fetch();
+
+
+  // Send mail
+  sendCommentMail($post_user['user_email'], $post_user['user_name'], $post_id, $post['post_image'], $_SESSION['user_name'], $comment);
+
   echo json_encode([
     'success' => 'Comment added'
   ]);

@@ -115,7 +115,11 @@ if (file_exists($envFile)) {
 
               <form id="comment_form" action="/scripts/comment.php" method="post">
                 <textarea name="comment" id="comment" placeholder="Write a comment..." minlength="3" maxlength="150"></textarea>
-                <button type="submit" disabled>Send</button>
+                <button type="submit" disabled>
+                  Send
+                </button>
+                
+                <div class="loader hidden"></div>
               </form>
             </div>
           <?php else: ?>

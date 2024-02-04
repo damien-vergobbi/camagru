@@ -354,11 +354,29 @@ if (commentForm) {
       return;
     }
 
+    // Show loader and hide button
+    const loader = document.querySelector('#comment_form .loader');
+    const button = document.querySelector('#comment_form button');
+
+    if (loader) {
+      loader.classList.remove('hidden');
+    }
+    if (button) {
+      button.classList.add('hidden');
+    }
+
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/scripts/post-comment.php');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onload = function() {
       try {
+        if (loader) {
+          loader.classList.add('hidden');
+        }
+        if (button) {
+          button.classList.remove('hidden');
+        }
+
         reloadDatas();
 
         if (xhr.status !== 200) {

@@ -26,7 +26,7 @@ if (file_exists($envFile)) {
 }
 
 
-function sendTestMail($recipientMail, $recipientUsername) {
+function sendCommentMail($recipientMail, $recipientUsername, $postID, $postImageUrl, $poster, $postComment) {
   $mail = new PHPMailer();
 
   $sender = getenv('MAIL_NAME');
@@ -45,8 +45,26 @@ function sendTestMail($recipientMail, $recipientUsername) {
   // Paramètres de l'e-mail
   $mail->setFrom($sender, 'Camagru dvergobb');
   $mail->addAddress($recipientMail, $recipientUsername);
-  $mail->Subject = 'Test Email';
-  $mail->Body = 'This is another test email sent using PHPMailer';
+  $mail->Subject = 'New comment on your post';
+
+  $server_ip = getenv('SERVER_IP');
+
+  $url = "http://$server_ip:80/post.php?id=$postID";
+  
+  $mail->Body = '
+    <html>
+      <body>
+        <h1>Camagru</h1>
+        <p>Hi ' . $recipientUsername . ',</p>
+        <p><span style="text-transform:uppercase;font-weight:700;">'.$poster.'</span> commented your post:</p>
+        <img src="' . $postImageUrl . '" alt="Post image" width="200" height="200">
+        <p style="border:1px solid #aaa;border-radius:10px;padding: 1rem 2rem;width:fit-content;">' . $postComment . '</p>
+        <a href="'.$url.'">See the post</a>
+      </body>
+    </html>
+  ';
+
+  $mail->isHTML(true);
 
   return $mail->send();
 }
