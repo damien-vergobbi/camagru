@@ -73,7 +73,7 @@ foreach ($images as $image) {
     $like = $stmt->fetch();
   }
 
-  renderItem($image['post_id'], $image['post_image'], $image['post_user_name'], $likes['like_count'], $comments['comment_count'], $like['count'] > 0);
+  renderItem($image['post_id'], $image['post_image'], $image['post_user_name'], $likes['like_count'], $comments['comment_count'], $like['count'] ?? 0 > 0);
 }
 
 if (empty($images)) {

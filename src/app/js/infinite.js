@@ -61,7 +61,7 @@ const renderItem = (id, url, username, likes, comments, liked) => {
 
     const likeDiv = document.createElement('div');
     footerEnd.appendChild(likeDiv);
-console.log(liked);
+
     const likeIcon = document.createElement('img');
     likeIcon.src = liked ?'../app/media/icon-like-fill.png' : '../app/media/icon-like.png';
     likeIcon.alt = 'Like';
@@ -113,6 +113,17 @@ function loadMore() {
             const elements = JSON.parse(xhr.responseText);
             const current = document.querySelectorAll('.item-div').length;
 
+            console.log(elements)
+
+            if (elements.length === 0 && current === 0) {
+                const noPost = document.createElement('p');
+                noPost.id = 'no-post';
+                noPost.textContent = 'No post found';
+                main.appendChild(noPost);
+                hideLoader();
+                return;
+            }
+
             if (current > 0 && elements.length === 0) {
                 page = 1;
                 hideLoader();
@@ -153,3 +164,23 @@ window.addEventListener('scroll', () => {
 
 // Load the first elements
 loadMore();
+
+// Load while main height is less than window height
+const interval = setInterval(() => {
+    const noPost = document.querySelector('#no-post');
+    if (noPost) {
+        clearInterval(interval);
+        return;
+    }
+
+    if (document.documentElement.scrollHeight <= window.innerHeight) {
+        loadMore();
+    } else {
+        clearInterval(interval);
+    }
+}, 300);
+
+// Clear interval 
+window.addEventListener('beforeunload', () => {
+    clearInterval(interval);
+});

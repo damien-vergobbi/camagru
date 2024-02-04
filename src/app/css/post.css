@@ -190,3 +190,36 @@ main #likes-div.not_logged {
 main #likes-div.not_logged:hover {
   transform: none;
 }
+
+/* Delete button */
+#delete_post {
+  background-color: #ff0000;
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+#delete_post img {
+  width: 20px;
+  height: 20px;
+  margin-right: 0.5rem;
+  object-fit: contain;
+}
+
+#delete_post:hover {
+  background-color: #ff3333;
+  transform: scale(1.05);
+}

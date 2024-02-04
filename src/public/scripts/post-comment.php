@@ -58,7 +58,7 @@ try {
   echo json_encode([
     'success' => 'Comment added'
   ]);
-} catch (PDOException $e) {
+} catch (Exception $e) {
   echo json_encode([
     'error' => 'Error: ' . $e->getMessage()
   ]);

@@ -26,7 +26,7 @@ const showLoader = () => {
   }
 };
 
-function loadMore() {
+function getDatas() {
   if (isLoading) {
     return;
   }
@@ -43,16 +43,16 @@ function loadMore() {
 
       const infos = JSON.parse(xhr.responseText);
 
-      console.log(infos);
-
-      if (!infos || infos.length === 0) {
-        hideLoader();
-        return;
-      }
-
-      if (Array.isArray(infos) && infos['error']) {
+      if (!infos || infos['error']) {
         console.error('Erreur lors du chargement :', infos['error']);
         hideLoader();
+
+        // Redirect to feed
+        if (window.history.length > 1) {
+          window.history.back();
+        } else {
+          window.location.href = 'index.php';
+        }
         return;
       }
 
@@ -117,6 +117,16 @@ function loadMore() {
             likeImage.src = '../app/media/icon-like.png';
           }
         }
+
+        // Show delete button if user is the author
+        const deleteButton = document.querySelector('#delete_post');
+        if (deleteButton) {
+          if (infos.is_author) {
+            deleteButton.classList.remove('hidden');
+          } else {
+            deleteButton.classList.add('hidden');
+          }
+        }
       } else {
         console.error('Erreur lors du chargement :', xhr.status);
       }
@@ -134,7 +144,7 @@ function loadMore() {
 }
 
 // Load datas
-loadMore();
+getDatas();
 
 // Go back to feed
 const backToFeed = document.querySelector('#back-to-feed');
@@ -185,7 +195,18 @@ function reloadDatas() {
 
       const infos = JSON.parse(xhr.responseText);
 
-      console.log(infos);
+      if (!infos || infos['error']) {
+        console.error('Erreur lors du chargement :', infos['error']);
+        hideLoader();
+
+        // Redirect to feed
+        if (window.history.length > 1) {
+          window.history.back();
+        } else {
+          window.location.href = 'index.php';
+        }
+        return;
+      }
 
       if (infos.post && infos.comments && infos.likes) {
         const post = infos.post;
@@ -296,8 +317,6 @@ if (likeButton && !likeButton.classList.contains('not_logged')) {
           throw new Error('Erreur lors du chargement');
         }
 
-        console.log(xhr.responseText);
-
         const response = JSON.parse(xhr.responseText);
 
         if (response.error) {
@@ -363,5 +382,41 @@ if (commentForm) {
       }
     };
     xhr.send(`id=${postId}&comment=${comment}`);
+  });
+}
+
+// Handle delete post
+const deleteButton = document.querySelector('#delete_post');
+if (deleteButton) {
+  deleteButton.addEventListener('click', function() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/scripts/post-delete.php');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+      try {
+        if (xhr.status !== 200) {
+          throw new Error('Erreur lors du chargement');
+        }
+
+        console.log(xhr.responseText);
+
+        const response = JSON.parse(xhr.responseText);
+
+        if (response.error) {
+          console.error('Erreur lors du chargement :', response.error);
+          return;
+        }
+
+        // Redirect to feed
+        if (window.history.length > 1) {
+          window.history.back();
+        } else {
+          window.location.href = 'index.php';
+        }
+      } catch (e) {
+        console.error('Erreur lors du chargement :', e);
+      }
+    };
+    xhr.send(`id=${postId}`);
   });
 }

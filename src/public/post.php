@@ -61,6 +61,7 @@ if (file_exists($envFile)) {
 
         <div id="post" class="item-div hidden">
           <img id="post_img" src="../app/media/icon-user.png" alt="Logo Camagru">
+
           <div class="item-footer">
             <div>
               <img src="../app/media/icon-user.png" alt="User" height="20" width="20">
@@ -72,10 +73,16 @@ if (file_exists($envFile)) {
                 <img src="../app/media/icon-like.png" alt="Like" height="20">
                 <p id="post_likes">0</p>
               </div>
+
               <div>
                 <img src="../app/media/icon-comment.png" alt="Like" height="20">
                 <p id="post_comments">0</p>
               </div>
+
+              <button id="delete_post" class="hidden">
+                <img src="../app/media/icon-delete.png" alt="Delete" height="20">
+                Delete
+              </button>
             </div>
           </div>
 

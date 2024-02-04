@@ -61,9 +61,10 @@ try {
     'post' => $post,
     'comments' => $IsLogged ? $comments : [],
     'likes' => $likes,
-    'liked' => $IsLogged ? $like['count'] > 0 : false
+    'liked' => $IsLogged ? $like['count'] > 0 : false,
+    'is_author' => $IsLogged ? $post['post_user_id'] === $_SESSION['user_id'] : false
   ]);
-} catch (PDOException $e) {
+} catch (Exception $e) {
   echo json_encode([
     'error' => 'Error: ' . $e->getMessage()
   ]);
