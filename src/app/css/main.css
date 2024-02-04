@@ -216,4 +216,8 @@ main .pagination a:hover {
   .infinite-wrapper .loader-wrapper {
     width: 100%;
   }
+
+  .settings_list {
+    width: 90%;
+  }
 }
