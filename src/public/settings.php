@@ -19,6 +19,7 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
     <!-- Load style from ../app/css/signin.css -->
     <link rel="stylesheet" href="../app/css/navbar.css">
     <link rel="stylesheet" href="../app/css/signin.css">
+    <link rel="stylesheet" href="../app/css/main.css">
 </head>
 <body>
     <? require_once 'components/navbar.php'; ?>
@@ -119,6 +120,8 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
             </div>
         </div>
     </main>
+
+    <? require_once 'components/private-list.php'; ?>
 
     <!-- Load script from ../app/js/singup.js -->
     <script src="../app/js/utils.js" defer></script>

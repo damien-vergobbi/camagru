@@ -15,12 +15,13 @@ main {
   color: #333;
 }
 
-main .item-div {
+.item-div {
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
   
   width: 350px;
+  min-width: 350px;
   height: auto;
   margin: 1rem;
   padding: 0;
@@ -30,19 +31,19 @@ main .item-div {
   transition: all 0.3s;
 }
 
-main .item-div:hover {
+.item-div:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
   transform: scale(1.05);
 }
 
-main .item-div img {
+.item-div img {
   width: 100%;
   height: auto;
   object-fit: contain;
   border-radius: 10px 10px 0 0;
 }
 
-main .item-footer {
+.item-footer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -50,7 +51,7 @@ main .item-footer {
   padding: 1rem 1.5rem; 
 }
 
-main .item-footer > div:first-of-type p {
+.item-footer > div:first-of-type p {
   font-size: 0.8rem;
   text-transform: uppercase;
 
@@ -61,21 +62,21 @@ main .item-footer > div:first-of-type p {
   white-space: nowrap;
 }
 
-main .item-footer div {
+.item-footer div {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
 
-main .item-footer div img {
+.item-footer div img {
   width: 20px;
   height: 20px;
   object-fit: contain;
   margin-right: 0.5rem;
 }
 
-main .item-footer .footer-end {
+.item-footer .footer-end {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -83,13 +84,13 @@ main .item-footer .footer-end {
   flex-wrap: wrap;
 }
 
-main .item-footer .footer-end div {
+.item-footer .footer-end div {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
-main .item-footer .footer-end div:first-child {
+.item-footer .footer-end div:first-child {
   margin-right: 1rem;
 }
 
@@ -136,7 +137,8 @@ main .pagination a:hover {
 }
 
 /* Infinite Scroll */
-.infinite-wrapper {
+.infinite-wrapper,
+.settings_list {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -146,6 +148,43 @@ main .pagination a:hover {
   width: 500px;
   margin: 0 auto;
   overflow-x: hidden;
+}
+
+.settings_list {
+  width: 70%;
+  margin: 0 auto;
+  overflow-y: hidden;
+  overflow-x: auto;
+  margin-bottom: 2rem;
+}
+
+.settings_list h1 {
+  width: 100%;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.settings_list > div {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: row;
+
+  width: 100%;
+  margin: 0 auto;
+  overflow-y: hidden;
+  overflow-x: auto;
+
+  /* background-color: red; */
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.settings_list > div > p {
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 .infinite-wrapper .loader-wrapper {
