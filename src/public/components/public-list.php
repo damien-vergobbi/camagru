@@ -100,15 +100,15 @@ if ($user === null) {
 $stmt->execute();
 $images = $stmt->fetchAll();
 
-if (empty($images)) {
-  echo '<p>No images found</p>';
-}
-
 if ($user !== null) {
   echo '<h1 class="posts_from">Posts from <span>' . $user . '</span></h1>';
   echo '<a href="/index.php">See all</a>';
 } else {
   echo '<h1 class="posts_from">All posts</h1>';
+}
+
+if (empty($images)) {
+  echo '<p>No images found</p>';
 }
 
 // Create the pagination
