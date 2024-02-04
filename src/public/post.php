@@ -67,8 +67,8 @@ if (file_exists($envFile)) {
               <p id="post_username">loading</p>
             </div>
 
-            <div class="footer-end">
-              <div>
+            <div class="footer-end ">
+              <div id="likes-div" class="<?= IS_LOGGED ? "" : "not_logged" ?>">
                 <img src="../app/media/icon-like.png" alt="Like" height="20">
                 <p id="post_likes">0</p>
               </div>

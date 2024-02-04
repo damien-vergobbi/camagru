@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 $pdo = require_once '../../config/db.php';
 
@@ -27,12 +28,40 @@ $images = $stmt->fetchAll();
 $list = [];
 
 foreach ($images as $image) {
+    $liked = false;
+
+    // Checked if the user liked the post
+    if (isset($_SESSION['user_id'])) {
+        $stmt = $pdo->prepare('SELECT COUNT(*) AS count
+                              FROM likes
+                              WHERE like_post_id = :post_id AND like_user_id = :user_id');
+        $stmt->bindValue(':post_id', $image['post_id'], PDO::PARAM_INT);
+        $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $stmt->execute();
+        $like = $stmt->fetch();
+
+        $liked = $like['count'] > 0;
+    }
+
+    // Get comments and likes
+    $stmt = $pdo->prepare('SELECT COUNT(*) AS comment_count FROM comments WHERE comment_post_id = :post_id');
+    $stmt->bindValue(':post_id', $image['post_id'], PDO::PARAM_INT);
+    $stmt->execute();
+    $comments = $stmt->fetch();
+
+    $stmt = $pdo->prepare('SELECT COUNT(like_id) AS like_count FROM likes WHERE like_post_id = :post_id');
+    $stmt->bindValue(':post_id', $image['post_id'], PDO::PARAM_INT);
+    $stmt->execute();
+    $likes = $stmt->fetch();
+
+
     $list[] = [
         'post_id' => $image['post_id'],
         'post_image' => $image['post_image'],
         'post_user_name' => $image['post_user_name'],
-        'like_count' => $image['like_count'],
-        'comment_count' => $image['comment_count']
+        'like_count' => $likes['like_count'],
+        'comment_count' => $comments['comment_count'],
+        'liked' => $liked
     ];
 }
 

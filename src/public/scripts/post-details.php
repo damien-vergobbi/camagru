@@ -45,10 +45,23 @@ try {
   $stmt->execute();
   $likes = $stmt->fetchAll();
 
+  // Check if the user liked the post
+  if ($IsLogged) {
+    $stmt = $pdo->prepare('SELECT COUNT(*) AS count
+                          FROM likes
+                          WHERE like_post_id = :post_id AND like_user_id = :user_id');
+    $stmt->bindValue(':post_id', $post_id, PDO::PARAM_INT);
+    $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+    $stmt->execute();
+
+    $like = $stmt->fetch();
+  }
+
   echo json_encode([
     'post' => $post,
     'comments' => $IsLogged ? $comments : [],
     'likes' => $likes,
+    'liked' => $IsLogged ? $like['count'] > 0 : false
   ]);
 } catch (PDOException $e) {
   echo json_encode([

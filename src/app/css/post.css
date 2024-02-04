@@ -127,7 +127,8 @@ main #comments_list .comment p {
 }
 
 main #comments_list .comment:not(:last-of-type) {
-  padding-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
   border-bottom: 1px solid #ccc;
 }
 
@@ -170,7 +171,22 @@ main #share-div img {
   transition: all 0.3s ease;
 }
 
-
 main #share-div img:hover {
   transform: scale(1.1);
+}
+
+/* Like section */
+main #likes-div {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+main #likes-div:hover {
+  transform: scale(1.1);
+}
+
+main #likes-div.not_logged {
+  cursor: not-allowed;
+}
+main #likes-div.not_logged:hover {
+  transform: none;
 }
