@@ -24,8 +24,21 @@ function renderItem($id, $url, $username, $likes, $comments, $liked) {
   echo '</a>';
 }
 
+function renderPagination($total, $elementsByPage, $page, $user) {
+  $pages = ceil($total / $elementsByPage);
+  $withUser = $user ? '&user=' . $user : '';
+  echo '<div class="pagination">';
+  for ($i = 1; $i <= $pages; $i++) {
+    $active = $i == $page ? 'active' : '';
+    echo '<a href="/index.php?page=' . $i . $withUser . '" class="' . $active . '">' . $i . '</a>';
+  }
+
+  echo '</div>';
+}
+
 $elementsByPage = 5;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
+$user = isset($_GET['user']) ? $_GET['user'] : null;
 $offset = ($page - 1) * $elementsByPage;
 
 $pdo = require_once '../config/db.php';
@@ -35,20 +48,71 @@ $stmt = $pdo->prepare('SELECT COUNT(*) FROM posts');
 $stmt->execute();
 $total = $stmt->fetchColumn();
 
+if ($user !== null) {
+  // get the user id
+  $stmt = $pdo->prepare('SELECT user_id FROM users WHERE user_name = :user');
+  $stmt->bindValue(':user', $user, PDO::PARAM_STR);
+  $stmt->execute();
+  $temp = $stmt->fetchColumn();
+
+  if ($temp === false || !$temp) {
+    echo '<p>User "'. $user .'" not found</p>';
+    echo '<a href="/index.php">See all</a>';
+    return;
+  }
+
+  // Count the total number of elements
+  $stmt = $pdo->prepare('SELECT COUNT(*) FROM posts WHERE post_user_id = :user');
+  $stmt->bindValue(':user', $temp, PDO::PARAM_INT);
+  $stmt->execute();
+  $total = $stmt->fetchColumn();
+}
+
 // Get the elements for the current page
-$stmt = $pdo->prepare('SELECT posts.*, 
-                              users.user_name AS post_user_name
-                      FROM posts
-                      LEFT JOIN users ON posts.post_user_id = users.user_id
-                      LEFT JOIN comments ON posts.post_id = comments.comment_post_id
-                      LEFT JOIN likes ON posts.post_id = likes.like_post_id
-                      GROUP BY posts.post_id
-                      ORDER BY posts.post_date DESC
-                      LIMIT :limit OFFSET :offset');
-$stmt->bindValue(':limit', $elementsByPage, PDO::PARAM_INT);
-$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+if ($user === null) {
+  $stmt = $pdo->prepare('SELECT posts.*, 
+                            users.user_name AS post_user_name
+                          FROM posts
+                          LEFT JOIN users ON posts.post_user_id = users.user_id
+                          LEFT JOIN comments ON posts.post_id = comments.comment_post_id
+                          LEFT JOIN likes ON posts.post_id = likes.like_post_id
+                          GROUP BY posts.post_id
+                          ORDER BY posts.post_date DESC
+                          LIMIT :limit OFFSET :offset');
+  $stmt->bindValue(':limit', $elementsByPage, PDO::PARAM_INT);
+  $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+} else {
+  $stmt = $pdo->prepare('SELECT posts.*, 
+                            users.user_name AS post_user_name
+                          FROM posts
+                          LEFT JOIN users ON posts.post_user_id = users.user_id
+                          LEFT JOIN comments ON posts.post_id = comments.comment_post_id
+                          LEFT JOIN likes ON posts.post_id = likes.like_post_id
+                          WHERE users.user_name = :user
+                          GROUP BY posts.post_id
+                          ORDER BY posts.post_date DESC
+                          LIMIT :limit OFFSET :offset');
+  $stmt->bindValue(':limit', $elementsByPage, PDO::PARAM_INT);
+  $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+  $stmt->bindValue(':user', $user, PDO::PARAM_STR);
+}
+
 $stmt->execute();
 $images = $stmt->fetchAll();
+
+if (empty($images)) {
+  echo '<p>No images found</p>';
+}
+
+if ($user !== null) {
+  echo '<h1 class="posts_from">Posts from <span>' . $user . '</span></h1>';
+  echo '<a href="/index.php">See all</a>';
+} else {
+  echo '<h1 class="posts_from">All posts</h1>';
+}
+
+// Create the pagination
+renderPagination($total, $elementsByPage, $page, $user);
 
 foreach ($images as $image) {
   // Get comments and likes
@@ -76,16 +140,7 @@ foreach ($images as $image) {
   renderItem($image['post_id'], $image['post_image'], $image['post_user_name'], $likes['like_count'], $comments['comment_count'], $like['count'] ?? 0 > 0);
 }
 
-if (empty($images)) {
-  echo '<p>No images found</p>';
-}
-
 // Create the pagination
-$pages = ceil($total / $elementsByPage);
-echo '<div class="pagination">';
-for ($i = 1; $i <= $pages; $i++) {
-  echo '<a href="?page=' . $i . '">' . $i . '</a>';
-}
+renderPagination($total, $elementsByPage, $page, $user);
 
-echo '</div';
 ?>

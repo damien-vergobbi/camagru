@@ -69,6 +69,7 @@ function getDatas() {
         const postUsername = document.querySelector('#post_username');
         if (postUsername) {
           postUsername.textContent = post.post_user_name;
+          postUsername.href = `index.php?user=${post.post_user_name}`;
         }
 
         const postLikes = document.querySelector('#post_likes');

@@ -93,6 +93,48 @@ main .item-footer .footer-end div:first-child {
   margin-right: 1rem;
 }
 
+main h1.posts_from {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+main h1.posts_from span {
+  margin-left: 0.5rem;
+  text-transform: uppercase;
+}
+
+main .pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+main .pagination a {
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+}
+
+main .pagination a.active {
+  background-color: #aaa;
+  color: white;
+  border-radius: 5px;
+}
+
+main .pagination a:hover {
+  background-color: #f4f4f4;
+  color: #333;
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+
 /* Infinite Scroll */
 .infinite-wrapper {
   display: flex;
@@ -135,5 +177,4 @@ main .item-footer .footer-end div:first-child {
   .infinite-wrapper .loader-wrapper {
     width: 100%;
   }
-  
 }

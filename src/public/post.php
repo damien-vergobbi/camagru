@@ -65,7 +65,7 @@ if (file_exists($envFile)) {
           <div class="item-footer">
             <div>
               <img src="../app/media/icon-user.png" alt="User" height="20" width="20">
-              <p id="post_username">loading</p>
+              <a href="#" id="post_username">loading</a>
             </div>
 
             <div class="footer-end ">
