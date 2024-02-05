@@ -1,4 +1,4 @@
-<?php // Redirect to signin.php if the user is not logged in
+<?php
 session_start();
 
 define('IS_LOGGED', isset($_SESSION['user_id'])
@@ -51,7 +51,7 @@ if (file_exists($envFile)) {
     <div class="infinite-wrapper">
 
       <aside id="scroll-mode" class="lefter">
-        <a href="index.php" id="back-to-feed">
+        <a href="/index.php" id="back-to-feed">
           <img src="../../app/media/icon-return.png" height="30" />
           Back to feed
         </a>
@@ -124,7 +124,7 @@ if (file_exists($envFile)) {
             </div>
           <?php else: ?>
             <p class="not-logged">
-              <a href="signin.php">Sign in</a>
+              <a href="/signin.php">Sign in</a>
               to like or comment
             </p>
           <?php endif; ?>

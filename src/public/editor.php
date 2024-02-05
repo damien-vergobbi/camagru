@@ -1,4 +1,4 @@
-<?php // Redirect to signin.php if the user is not logged in
+<?php 
 session_start();
 
 define('IS_LOGGED', isset($_SESSION['user_id'])
@@ -66,10 +66,9 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
                 
                 <div class="left_bar">
                     <h2>Previous images</h2>
+
                     <div id="previous_images">
-                        <p>
-                            No previous images
-                        </p>
+                        <? require_once 'components/editor-list.php'; ?>
                     </div>
                 </div>
             </div>

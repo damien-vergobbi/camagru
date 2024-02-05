@@ -1,4 +1,4 @@
-<?php // Redirect to signin.php if the user is not logged in
+<?php 
 session_start();
 
 define('IS_LOGGED', isset($_SESSION['user_id'])

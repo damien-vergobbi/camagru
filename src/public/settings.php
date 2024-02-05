@@ -5,6 +5,10 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
     && isset($_SESSION['user_name'])
     && isset($_SESSION['user_email']));
 
+if (!IS_LOGGED) {
+    header('Location: /signin.php');
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -108,7 +112,7 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
 
                     <p id="success-log" class="hidden">
                         Your changes have been saved.
-                        <a href="index.php">Go home</a>
+                        <a href="/index.php">Go home</a>
                     </p>
                 </form>
             </div>

@@ -46,7 +46,13 @@ if (isset($_FILES["imageData"]) && $_FILES["imageData"]["error"] === UPLOAD_ERR_
       $stmt->bindValue(':image', $fileName, PDO::PARAM_STR);
       $stmt->execute();
 
-      echo json_encode(['path' => $uploadFilePath]);
+      // Get the last inserted id
+      $lastId = $pdo->lastInsertId();
+
+      echo json_encode([
+        'path' => $uploadFilePath,
+        'url' => "/post.php?id=$lastId"
+      ]);
       exit();
     } else {
       throw new Exception('Failed to save the image');

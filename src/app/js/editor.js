@@ -73,10 +73,16 @@ const uploadImage = (dataURL) => {
 
           if (text?.path) {
             // Success
+            const aElt = document.createElement('a');
+            aElt.href = text.url;
+
             const imageElt = new Image();
             imageElt.src = text.path;
             imageElt.width = 200;
             imageElt.height = 150;
+
+            // Add link to the image
+            aElt.appendChild(imageElt);
             
             const imageContainer = document.getElementById('previous_images');
 
@@ -86,7 +92,7 @@ const uploadImage = (dataURL) => {
             }
 
             // Append before the first child
-            imageContainer.insertBefore(imageElt, imageContainer.firstChild);
+            imageContainer.insertBefore(aElt, imageContainer.firstChild);
           } else {
             // Error
             throw new Error(JSON.parse(xhr.responseText).error || xhr.responseText);

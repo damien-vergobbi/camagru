@@ -228,6 +228,11 @@ main > .container #previous_images {
   border-radius: 10px;
 }
 
+main > .container #previous_images a {
+  margin: auto;
+  width: 70%;
+}
+
 main > .container > .left_bar p {
   font-size: 1rem;
   padding: 2rem 0.5rem;
@@ -239,6 +244,6 @@ main > .container > .left_bar img {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   margin: 1rem;
 
-  width: 70%;
+  width: 100%;
   height: auto;
 }

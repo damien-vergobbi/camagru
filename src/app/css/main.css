@@ -28,6 +28,7 @@ main {
   border: 1px solid #ccc;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   transition: all 0.3s;
+  display: inline-block;
 }
 
 .item-div:hover {
@@ -40,6 +41,7 @@ main {
   height: auto;
   object-fit: contain;
   border-radius: 10px 10px 0 0;
+  margin: auto;
 }
 
 .item-footer {

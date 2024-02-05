@@ -95,7 +95,7 @@ $token = $_GET['token'] ?? '';
             
             <div class="signup-div">
                 <p>
-                  If you are not redirected <a href="signin.php">Sign in</a>
+                  If you are not redirected <a href="/signin.php">Sign in</a>
                 </p>
             </div>
         </div>

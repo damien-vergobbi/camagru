@@ -50,7 +50,7 @@ function getDatas() {
         if (window.history.length > 1) {
           window.history.back();
         } else {
-          window.location.href = 'index.php';
+          window.location.href = '/index.php';
         }
         return;
       }
@@ -63,12 +63,16 @@ function getDatas() {
         const postImg = document.querySelector('#post_img');
         if (postImg) {
           postImg.src = post.post_image;
+          postImg.addEventListener('error', function() {
+            postImg.src = '../app/media/error404.png';
+            postImg.alt = 'Error 404';
+          });
         }
 
         const postUsername = document.querySelector('#post_username');
         if (postUsername) {
           postUsername.textContent = post.post_user_name;
-          postUsername.href = `index.php?user=${post.post_user_name}`;
+          postUsername.href = `/index.php?user=${post.post_user_name}`;
         }
 
         const postLikes = document.querySelector('#post_likes');
@@ -152,7 +156,7 @@ if (backToFeed) {
     if (window.history.length > 1) {
       window.history.back();
     } else {
-      window.location.href = 'index.php';
+      window.location.href = '/index.php';
     }
   });
 }
@@ -198,7 +202,7 @@ function reloadDatas() {
         if (window.history.length > 1) {
           window.history.back();
         } else {
-          window.location.href = 'index.php';
+          window.location.href = '/index.php';
         }
         return;
       }
@@ -417,7 +421,7 @@ if (deleteButton) {
         if (window.history.length > 1) {
           window.history.back();
         } else {
-          window.location.href = 'index.php';
+          window.location.href = '/index.php';
         }
       } catch (e) {
         // console.error('Error:', e);

@@ -22,7 +22,7 @@ function renderItem($id, $url, $username, $likes, $comments, $liked) {
   $prefixPath = "http://" . getenv('SERVER_IP') . ":80/posts/";
 
   echo '<a href="/post.php?id='.$id.'" id="post-'.$id.'" class="item-div" title="Click to see this post from '.$username.'">';
-  echo '<img src="' . $prefixPath . $url . '" alt="Post">';
+  echo '<img src="' . $prefixPath . $url . '" alt="Post" onerror="if (this.src !== \'../app/media/error404.png\') this.src = \'../app/media/error404.png\';">';
   echo '<div class="item-footer">';
   echo '<div>';
   echo '<img src="../app/media/icon-user.png" alt="User" height="20" width="20">';

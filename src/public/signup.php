@@ -85,7 +85,7 @@ session_destroy();
             
             <div class="signup-div">
                 <p>
-                    Already have an account ? <a href="signin.php">Sign in</a>
+                    Already have an account ? <a href="/signin.php">Sign in</a>
                 </p>
             </div>
         </div>

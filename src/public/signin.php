@@ -72,9 +72,9 @@ session_destroy();
             
             <div class="signup-div">
                 <p>
-                    Don't have an account ? <a href="signup.php">Sign up</a>
+                    Don't have an account ? <a href="/signup.php">Sign up</a>
                     <br>
-                    Continue as <a href="index.php">guest</a>
+                    Continue as <a href="/index.php">guest</a>
                 </p>
             </div>
         </div>

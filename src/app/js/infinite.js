@@ -35,6 +35,11 @@ const renderItem = (id, url, username, likes, comments, liked) => {
     const img = document.createElement('img');
     img.src = url;
     img.alt = 'Logo Camagru';
+    img.onerror = function() {
+        img.src = '../app/media/error404.png';
+        img.alt = 'Error 404';
+    };
+
     itemDiv.appendChild(img);
 
     const itemFooter = document.createElement('div');
