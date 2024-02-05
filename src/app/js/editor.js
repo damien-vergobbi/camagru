@@ -5,8 +5,16 @@ const videoContainer = document.getElementById('video_container');
 const captureButton = document.getElementById('captureButton');
 const logError = document.getElementById('log_error');
 
-// Get user webcam if videoElement is shown
-navigator.mediaDevices.getUserMedia({ video: true })
+const stopVideoStream = () => {
+  if (videoElement.srcObject) {
+    const tracks = videoElement.srcObject.getTracks();
+    tracks.forEach(track => track.stop());
+    videoElement.srcObject = null;
+  }
+}
+
+const startVideoStream = () => {
+  navigator.mediaDevices.getUserMedia({ video: true })
   .then((stream) => {
     videoElement.srcObject = stream;
     videoElement.play();
@@ -15,13 +23,26 @@ navigator.mediaDevices.getUserMedia({ video: true })
     console.error('Error accessing webcam:', error);
     logError.innerHTML = 'Please allow access to your camera and microphone to use this feature';
   });
+}
+
+// Start video stream when videoElement is loaded
+startVideoStream();
 
 captureButton.addEventListener('click', () => {
   const canvas = document.createElement('canvas');
-  canvas.width = videoElement.videoWidth;
-  canvas.height = videoElement.videoHeight;
+
+  if (videoElement.classList.contains('hidden')) {
+    canvas.width = imageElement.width;
+    canvas.height = imageElement.height;
+  } else {
+    canvas.width = videoElement.offsetWidth;
+    canvas.height = videoElement.offsetHeight;
+  }
 
   const context = canvas.getContext('2d');
+
+  // Reset log error
+  logError.innerHTML = '';
 
   // Image as background or video
   if (videoElement.classList.contains('hidden')) {
@@ -57,6 +78,43 @@ captureButton.addEventListener('click', () => {
 
   // Append before the first child
   imageContainer.insertBefore(imageElt, imageContainer.firstChild);
+});
+
+const imageBack = () => {
+  // Hide video
+  videoElement.classList.add('hidden');
+  imageElement.classList.remove('hidden');
+
+  document.getElementById('delImageButton').classList.remove('hidden');
+  document.getElementById('upImageButton').classList.add('hidden');
+
+  // Reset log error
+  logError.innerHTML = '';
+
+  // Stop video stream
+  stopVideoStream();
+}
+
+const videoBack = () => {
+  // Hide video
+  videoElement.classList.remove('hidden');
+  imageElement.classList.add('hidden');
+
+  document.getElementById('delImageButton').classList.add('hidden');
+  document.getElementById('upImageButton').classList.remove('hidden');
+
+  // Reset log error
+  logError.innerHTML = '';
+
+  // Start video stream
+  startVideoStream();
+}
+
+// Delete image
+document.getElementById('delImageButton').addEventListener('click', () => {
+  imageElement.classList.add('hidden');
+  imageElement.src = '';
+  videoBack();
 });
 
 // Print the sticker checked
@@ -148,6 +206,8 @@ upStickerButton.addEventListener('click', () => {
 stickerFile.addEventListener('change', (event) => {
   const file = event.target.files[0];
 
+  if (!file) return;
+
   // Vérification de la taille du fichier
   const maxSizeInBytes = 10 * 1024 * 1024; // 10 Mo
   if (file.size > maxSizeInBytes) {
@@ -161,6 +221,11 @@ stickerFile.addEventListener('change', (event) => {
     logError.innerHTML = 'The file type is not allowed. Please select an image file.';
     return;
   }
+
+  // Uncheck all stickers
+  document.querySelectorAll('#stickers_list input').forEach(input => {
+    input.checked = false;
+  });
 
   const reader = new FileReader();
 
@@ -203,6 +268,8 @@ upImageButton.addEventListener('click', () => {
 imageFile.addEventListener('change', (event) => {
   const file = event.target.files[0];
 
+  if (!file) return;
+
   // Vérification de la taille du fichier
   const maxSizeInBytes = 10 * 1024 * 1024; // 10 Mo
   if (file.size > maxSizeInBytes) {
@@ -224,28 +291,25 @@ imageFile.addEventListener('change', (event) => {
     videoElement.classList.add('hidden');
     imageElement.src = e.target.result;
     imageElement.classList.remove('hidden');
+
+    imageBack();
   };
 
   reader.onerror = (e) => {
+    videoBack();
     logError.innerHTML = 'An error occurred while reading the file. Please try again.';
-
-    // Hide image and show video
-    imageElement.classList.add('hidden');
-    videoElement.classList.remove('hidden');
-    imageElement.src = '';
   };
 
   // Lecture du fichier en tant que Data URL
   reader.readAsDataURL(file);
 });
 
-// Listen sticker on error
+// Listen image on error
 imageElement.addEventListener('error', () => {
+  if (imageElement.classList.contains('hidden')) return;
+
+  videoBack();
   logError.innerHTML = 'An error occurred while reading the file. Please try again.';
-   // Hide image and show video
-   imageElement.classList.add('hidden');
-   videoElement.classList.remove('hidden');
-   imageElement.src = '';
 });
 
 

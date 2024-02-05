@@ -171,6 +171,17 @@ main #video_container #buttons button img {
   margin-right: 10px;
 }
 
+main #video_container #buttons button#delImageButton {
+  background-color: #ff0000;
+  cursor: pointer;
+}
+main #video_container #buttons button#delImageButton img {
+  filter: unset;
+}
+main #video_container #buttons button#delImageButton:hover {
+  background-color: #cc0000;
+}
+
 main #video_container #buttons button:hover {
   background-color: #0056b3;
 }

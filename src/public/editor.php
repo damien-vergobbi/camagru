@@ -52,6 +52,11 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
                         Add image
                     </button>
 
+                    <button id="delImageButton" class="hidden">
+                        <img src="../app/media/icon-delete.png" alt="Image">
+                        Clear image
+                    </button>
+
                     <button id="captureButton">
                         <img src="../app/media/icon-take-photo.png" alt="Camera">
                         Take photo
