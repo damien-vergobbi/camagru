@@ -80,7 +80,7 @@ $pagename = basename($_SERVER['REQUEST_URI']);
   });
 
   // Listen click event on hamburger button
-  document.querySelector('.sidenav-trigger').addEventListener('click', () => {
+  document.querySelector('.sidenav-trigger')?.addEventListener('click', () => {
     // Get mobile menu
     const mobileMenu = document.querySelector('.sidenav');
 

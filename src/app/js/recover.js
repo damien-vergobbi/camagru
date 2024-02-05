@@ -1,4 +1,4 @@
-document.getElementById("confirm-form").addEventListener("submit", function(event) {
+document.getElementById("confirm-form")?.addEventListener("submit", function(event) {
     event.preventDefault();
 
     // Remove error classes
@@ -117,18 +117,18 @@ document.getElementById("confirm-form").addEventListener("submit", function(even
 });
 
 // Clear error on input change
-document.getElementById("email").addEventListener("input", function() {
+document.getElementById("email")?.addEventListener("input", function() {
     document.getElementById("email").classList.remove("is-invalid");
 });
 
-document.getElementById("token").addEventListener("input", function() {
+document.getElementById("token")?.addEventListener("input", function() {
     document.getElementById("token").classList.remove("is-invalid");
 });
 
-document.getElementById("password").addEventListener("input", function() {
+document.getElementById("password")?.addEventListener("input", function() {
     document.getElementById("password").classList.remove("is-invalid");
 });
 
-document.getElementById("confirm-password").addEventListener("input", function() {
+document.getElementById("confirm-password")?.addEventListener("input", function() {
     document.getElementById("confirm-password").classList.remove("is-invalid");
 });

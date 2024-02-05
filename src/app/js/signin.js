@@ -1,4 +1,4 @@
-document.getElementById("signin-form").addEventListener("submit", function(event) {
+document.getElementById("signin-form")?.addEventListener("submit", function(event) {
     event.preventDefault();
 
     // Remove error classes
@@ -97,16 +97,16 @@ document.getElementById("signin-form").addEventListener("submit", function(event
 });
 
 // Clear error on input change
-document.getElementById("username").addEventListener("input", function() {
+document.getElementById("username")?.addEventListener("input", function() {
     document.getElementById("username").classList.remove("is-invalid");
 });
 
-document.getElementById("password").addEventListener("input", function() {
+document.getElementById("password")?.addEventListener("input", function() {
     document.getElementById("password").classList.remove("is-invalid");
 });
 
 /* ======== Recover password ======== */
-document.getElementById("recover-link").addEventListener("click", function(event) {
+document.getElementById("recover-link")?.addEventListener("click", function(event) {
     event.preventDefault();
 
     const username = document.getElementById("username").value;

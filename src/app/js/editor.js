@@ -15,7 +15,7 @@ const stopVideoStream = () => {
 
 const startVideoStream = () => {
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    logError.innerHTML = 'Your browser does not support the camera feature. Please use a modern browser or click on "Add image".';
+    if (logError) logError.innerHTML = 'Your browser does not support the camera feature. Please use a modern browser or click on "Add image".';
     return;
   }
 
@@ -25,7 +25,7 @@ const startVideoStream = () => {
     videoElement.play();
   })
   .catch((error) => {
-    logError.innerHTML = 'Please allow access to your camera and microphone to use this feature or click on "Add image".';
+    if (logError) logError.innerHTML = 'Please allow access to your camera and microphone to use this feature or click on "Add image".';
   });
 }
 
@@ -114,9 +114,13 @@ const uploadImage = (dataURL) => {
 };
 
 // Start video stream when videoElement is loaded
-startVideoStream();
+document?.addEventListener('DOMContentLoaded', () => {
+  // Check if video exists
+  if (videoElement)
+    startVideoStream();
+});
 
-captureButton.addEventListener('click', () => {
+captureButton?.addEventListener('click', () => {
   const canvas = document.createElement('canvas');
 
   // Check if video is recording or image is displayed
@@ -192,36 +196,10 @@ const videoBack = () => {
 }
 
 // Delete image
-document.getElementById('delImageButton').addEventListener('click', () => {
+document.getElementById('delImageButton')?.addEventListener('click', () => {
   imageElement.classList.add('hidden');
   imageElement.src = '';
   videoBack();
-});
-
-// Print the sticker checked
-const stickerChecked = document.querySelector('#stickers_list input:checked');
-const stickerElement = document.getElementById('stickerElement');
-
-stickerElement.src = `../app/stickers/${stickerChecked.value}`;
-stickerElement.style.display = 'block';
-
-// Center the sticker
-stickerElement.style.left = `${videoContainer.offsetWidth / 2 - stickerElement.offsetWidth / 2}px`;
-stickerElement.style.top = `${videoContainer.offsetHeight / 2 - stickerElement.offsetHeight / 2}px`;
-
-// Handle input name="sticker" change
-document.querySelectorAll('#stickers_list input').forEach(input => {
-  input.addEventListener('change', (event) => {
-    const selectedSticker = event.target.value;
-    const stickerElement = document.getElementById('stickerElement');
-
-    stickerElement.src = `../app/stickers/${selectedSticker}`;
-    stickerElement.style.display = 'block';
-
-    // Center the sticker
-    stickerElement.style.left = `${videoContainer.offsetWidth / 2 - stickerElement.offsetWidth / 2}px`;
-    stickerElement.style.top = `${videoContainer.offsetHeight / 2 - stickerElement.offsetHeight / 2}px`;
-  });
 });
 
 // Move the sticker
@@ -279,18 +257,47 @@ const toggleDrag = (event) => {
   }
 }
 
-stickerElement.addEventListener('click', toggleDrag);
-stickerElement.addEventListener('mousemove', drag);
+
+// Print the sticker checked
+const stickerChecked = document.querySelector('#stickers_list input:checked');
+const stickerElement = document.getElementById('stickerElement');
+
+if (stickerChecked && stickerElement) {
+  stickerElement.src = `../app/stickers/${stickerChecked.value}`;
+  stickerElement.style.display = 'block';
+
+  // Center the sticker
+  stickerElement.style.left = `${videoContainer.offsetWidth / 2 - stickerElement.offsetWidth / 2}px`;
+  stickerElement.style.top = `${videoContainer.offsetHeight / 2 - stickerElement.offsetHeight / 2}px`;
+
+  // Handle input name="sticker" change
+  document.querySelectorAll('#stickers_list input').forEach(input => {
+    input.addEventListener('change', (event) => {
+      const selectedSticker = event.target.value;
+      const stickerElement = document.getElementById('stickerElement');
+
+      stickerElement.src = `../app/stickers/${selectedSticker}`;
+      stickerElement.style.display = 'block';
+
+      // Center the sticker
+      stickerElement.style.left = `${videoContainer.offsetWidth / 2 - stickerElement.offsetWidth / 2}px`;
+      stickerElement.style.top = `${videoContainer.offsetHeight / 2 - stickerElement.offsetHeight / 2}px`;
+    });
+  });
+
+  stickerElement.addEventListener('click', toggleDrag);
+  stickerElement.addEventListener('mousemove', drag);
+}
 
 /* Upload sticker section */
 const stickerFile = document.getElementById('stickerFile');
 const upStickerButton = document.getElementById('upStickerButton');
 
-upStickerButton.addEventListener('click', () => {
+upStickerButton?.addEventListener('click', () => {
   stickerFile.click();
 });
 
-stickerFile.addEventListener('change', (event) => {
+stickerFile?.addEventListener('change', (event) => {
   const file = event.target.files[0];
 
   if (!file) return;
@@ -339,7 +346,7 @@ stickerFile.addEventListener('change', (event) => {
 });
 
 // Listen sticker on error
-stickerElement.addEventListener('error', () => {
+stickerElement?.addEventListener('error', () => {
   logError.innerHTML = 'An error occurred while reading the file. Please try again.';
   stickerElement.style.display = 'none';
 });
@@ -348,11 +355,11 @@ stickerElement.addEventListener('error', () => {
 const imageFile = document.getElementById('imageFile');
 const upImageButton = document.getElementById('upImageButton');
 
-upImageButton.addEventListener('click', () => {
+upImageButton?.addEventListener('click', () => {
   imageFile.click();
 });
 
-imageFile.addEventListener('change', (event) => {
+imageFile?.addEventListener('change', (event) => {
   const file = event.target.files[0];
 
   if (!file) return;
@@ -392,7 +399,7 @@ imageFile.addEventListener('change', (event) => {
 });
 
 // Listen image on error
-imageElement.addEventListener('error', () => {
+imageElement?.addEventListener('error', () => {
   if (imageElement.classList.contains('hidden')) return;
 
   videoBack();

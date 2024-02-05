@@ -1,4 +1,4 @@
-document.getElementById("signup-form").addEventListener("submit", function(event) {
+document.getElementById("signup-form")?.addEventListener("submit", function(event) {
     event.preventDefault();
 
     // Remove error classes
@@ -124,22 +124,22 @@ document.getElementById("signup-form").addEventListener("submit", function(event
 });
 
 // Clear error on input change
-document.getElementById("email").addEventListener("input", function() {
+document.getElementById("email")?.addEventListener("input", function() {
     document.getElementById("email").classList.remove("is-invalid");
     document.getElementById("email-error").innerHTML = "";
 });
 
-document.getElementById("username").addEventListener("input", function() {
+document.getElementById("username")?.addEventListener("input", function() {
     document.getElementById("username").classList.remove("is-invalid");
     document.getElementById("username-error").innerHTML = "";
 });
 
-document.getElementById("password").addEventListener("input", function() {
+document.getElementById("password")?.addEventListener("input", function() {
     document.getElementById("password").classList.remove("is-invalid");
     document.getElementById("password-error").innerHTML = "";
 });
 
-document.getElementById("confirm-password").addEventListener("input", function() {
+document.getElementById("confirm-password")?.addEventListener("input", function() {
     document.getElementById("confirm-password").classList.remove("is-invalid");
     document.getElementById("confirm-password-error").innerHTML = "";
 });
