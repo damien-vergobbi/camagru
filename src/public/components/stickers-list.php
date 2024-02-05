@@ -17,6 +17,12 @@ usort($stickers, function ($a, $b) {
 
 echo '<div id="stickers_list">';
 foreach ($stickers as $sticker) {
+  // Check if image and valid extension
+  $mimetype = mime_content_type('../app/stickers/' . $sticker);
+  if (strpos($mimetype, 'image/') === false) {
+    continue;
+  }
+  
   // Radio button with sticker
   echo '<label>';
   echo '<input type="radio" name="sticker" value="' . $sticker . '" ' . ($checked ? 'checked' : '') . '>';
