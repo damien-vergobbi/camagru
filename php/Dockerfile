@@ -5,5 +5,6 @@ RUN docker-php-ext-configure gd --with-jpeg
 RUN docker-php-ext-install pdo_mysql gd
 
 RUN echo "date.timezone = Europe/Paris" > /usr/local/etc/php/conf.d/timezone.ini
+RUN echo "access.log = /dev/null" >> /usr/local/etc/php-fpm.d/www.conf
 
 WORKDIR /var/www/html

@@ -12,6 +12,8 @@ services:
       - MYSQL_ROOT_PASSWORD=${DB_PASS}
     volumes:
       - ./mysql:/docker-entrypoint-initdb.d
+    logging:
+      driver: none
 
   phpmyadmin:
     image: phpmyadmin:latest
@@ -23,6 +25,8 @@ services:
       - PMA_ARBITRARY=1
     depends_on:
       - db
+    logging:
+      driver: none
 
   server:
     image: nginx
