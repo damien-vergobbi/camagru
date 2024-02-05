@@ -1,0 +1,251 @@
+// Sélectionnez la balise vidéo et le bouton de capture
+const videoElement = document.getElementById('videoElement');
+const imageElement = document.getElementById('imageElement');
+const videoContainer = document.getElementById('video_container');
+const captureButton = document.getElementById('captureButton');
+const logError = document.getElementById('log_error');
+
+// Get user webcam if videoElement is shown
+navigator.mediaDevices.getUserMedia({ video: true })
+  .then((stream) => {
+    videoElement.srcObject = stream;
+    videoElement.play();
+  })
+  .catch((error) => {
+    console.error('Error accessing webcam:', error);
+    logError.innerHTML = 'Please allow access to your camera and microphone to use this feature';
+  });
+
+captureButton.addEventListener('click', () => {
+  const canvas = document.createElement('canvas');
+  canvas.width = videoElement.videoWidth;
+  canvas.height = videoElement.videoHeight;
+
+  const context = canvas.getContext('2d');
+
+  // Image as background or video
+  if (videoElement.classList.contains('hidden')) {
+    context.drawImage(imageElement, 0, 0, canvas.width, canvas.height);
+  } else {
+    context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+  }
+
+  // Get sticker and draw it on the canvas
+  const stickerElement = document.getElementById('stickerElement');
+
+  if (stickerElement.style.display === 'none' || stickerElement.src === '') {
+    logError.innerHTML = 'Please select a sticker before taking a picture';
+    return;
+  }
+
+  context.drawImage(stickerElement, stickerElement.offsetLeft, stickerElement.offsetTop, stickerElement.width, stickerElement.height);
+  
+  const dataURL = canvas.toDataURL('image/png');
+  
+  // Créez une nouvelle image avec la capture
+  const imageElt = new Image();
+  imageElt.src = dataURL;
+  imageElt.width = 200;
+  imageElt.height = 150;
+  
+  const imageContainer = document.getElementById('previous_images');
+
+  // Remove <p> tag if no image
+  if (imageContainer.querySelector('p')) {
+    imageContainer.querySelector('p').remove();
+  }
+
+  // Append before the first child
+  imageContainer.insertBefore(imageElt, imageContainer.firstChild);
+});
+
+// Print the sticker checked
+const stickerChecked = document.querySelector('#stickers_list input:checked');
+const stickerElement = document.getElementById('stickerElement');
+
+stickerElement.src = `../app/stickers/${stickerChecked.value}`;
+stickerElement.style.display = 'block';
+
+// Center the sticker
+stickerElement.style.left = `${videoContainer.offsetWidth / 2 - stickerElement.offsetWidth / 2}px`;
+stickerElement.style.top = `${videoContainer.offsetHeight / 2 - stickerElement.offsetHeight / 2}px`;
+
+// Handle input name="sticker" change
+document.querySelectorAll('#stickers_list input').forEach(input => {
+  input.addEventListener('change', (event) => {
+    const selectedSticker = event.target.value;
+    const stickerElement = document.getElementById('stickerElement');
+
+    stickerElement.src = `../app/stickers/${selectedSticker}`;
+    stickerElement.style.display = 'block';
+
+    // Center the sticker
+    stickerElement.style.left = `${videoContainer.offsetWidth / 2 - stickerElement.offsetWidth / 2}px`;
+    stickerElement.style.top = `${videoContainer.offsetHeight / 2 - stickerElement.offsetHeight / 2}px`;
+  });
+});
+
+// Move the sticker
+let offsetX = 0;
+let offsetY = 0;
+let isDragging = false;
+
+function startDrag(event) {
+  isDragging = true;
+  offsetX = event.clientX - stickerElement.getBoundingClientRect().left;
+  offsetY = event.clientY - stickerElement.getBoundingClientRect().top;
+}
+
+function drag(event) {
+  if (isDragging) {
+    if (videoElement.classList.contains('hidden')) {
+      const imageRect = imageElement.getBoundingClientRect();
+      let x = event.clientX - imageRect.left - offsetX;
+      let y = event.clientY - imageRect.top - offsetY;
+
+      x = Math.max(0, Math.min(imageElement.offsetWidth - stickerElement.offsetWidth, x));
+      y = Math.max(0, Math.min(imageElement.offsetHeight - stickerElement.offsetHeight, y));
+
+      stickerElement.style.left = `${x}px`;
+      stickerElement.style.top = `${y}px`;
+    } else {
+      const videoRect = videoElement.getBoundingClientRect();
+      let x = event.clientX - videoRect.left - offsetX;
+      let y = event.clientY - videoRect.top - offsetY;
+
+      x = Math.max(0, Math.min(videoElement.offsetWidth - stickerElement.offsetWidth, x));
+      y = Math.max(0, Math.min(videoElement.offsetHeight - stickerElement.offsetHeight, y));
+
+      stickerElement.style.left = `${x}px`;
+      stickerElement.style.top = `${y}px`;
+    }
+  }
+}
+
+const toggleDrag = (event) => {
+  isDragging = !isDragging;
+
+  if (isDragging) {
+    stickerElement.style.cursor = 'grabbing';
+    offsetX = event.clientX - stickerElement.getBoundingClientRect().left;
+    offsetY = event.clientY - stickerElement.getBoundingClientRect().top;
+  } else {
+    stickerElement.style.cursor = 'grab';
+  }
+}
+
+stickerElement.addEventListener('click', toggleDrag);
+stickerElement.addEventListener('mousemove', drag);
+
+/* Upload sticker section */
+const stickerFile = document.getElementById('stickerFile');
+const upStickerButton = document.getElementById('upStickerButton');
+
+upStickerButton.addEventListener('click', () => {
+  stickerFile.click();
+});
+
+stickerFile.addEventListener('change', (event) => {
+  const file = event.target.files[0];
+
+  // Vérification de la taille du fichier
+  const maxSizeInBytes = 10 * 1024 * 1024; // 10 Mo
+  if (file.size > maxSizeInBytes) {
+    logError.innerHTML = 'The file is too large. Please select a file less than 10MB.';
+    return;
+  }
+
+  // Vérification du type de fichier
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+  if (!allowedTypes.includes(file.type)) {
+    logError.innerHTML = 'The file type is not allowed. Please select an image file.';
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = (e) => {
+    stickerElement.src = e.target.result;
+    stickerElement.style.display = 'block';
+
+    if (stickerElement.naturalWidth !== 0 && stickerElement.naturalHeight !== 0) {
+      // Centrer le sticker
+      stickerElement.style.left = `${videoContainer.offsetWidth / 2 - stickerElement.offsetWidth / 2}px`;
+      stickerElement.style.top = `${videoContainer.offsetHeight / 2 - stickerElement.offsetHeight / 2}px`;
+    } else {
+      logError.innerHTML = 'The file is not a valid image. Please select another file.';
+      stickerElement.style.display = 'none';
+    }
+  };
+
+  reader.onerror = (e) => {
+    logError.innerHTML = 'An error occurred while reading the file. Please try again.';
+  };
+
+  // Lecture du fichier en tant que Data URL
+  reader.readAsDataURL(file);
+});
+
+// Listen sticker on error
+stickerElement.addEventListener('error', () => {
+  logError.innerHTML = 'An error occurred while reading the file. Please try again.';
+  stickerElement.style.display = 'none';
+});
+
+/* Upload image section */
+const imageFile = document.getElementById('imageFile');
+const upImageButton = document.getElementById('upImageButton');
+
+upImageButton.addEventListener('click', () => {
+  imageFile.click();
+});
+
+imageFile.addEventListener('change', (event) => {
+  const file = event.target.files[0];
+
+  // Vérification de la taille du fichier
+  const maxSizeInBytes = 10 * 1024 * 1024; // 10 Mo
+  if (file.size > maxSizeInBytes) {
+    logError.innerHTML = 'The file is too large. Please select a file less than 10MB.';
+    return;
+  }
+
+  // Vérification du type de fichier
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+  if (!allowedTypes.includes(file.type)) {
+    logError.innerHTML = 'The file type is not allowed. Please select an image file.';
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = (e) => {
+    // Hide video and show image
+    videoElement.classList.add('hidden');
+    imageElement.src = e.target.result;
+    imageElement.classList.remove('hidden');
+  };
+
+  reader.onerror = (e) => {
+    logError.innerHTML = 'An error occurred while reading the file. Please try again.';
+
+    // Hide image and show video
+    imageElement.classList.add('hidden');
+    videoElement.classList.remove('hidden');
+    imageElement.src = '';
+  };
+
+  // Lecture du fichier en tant que Data URL
+  reader.readAsDataURL(file);
+});
+
+// Listen sticker on error
+imageElement.addEventListener('error', () => {
+  logError.innerHTML = 'An error occurred while reading the file. Please try again.';
+   // Hide image and show video
+   imageElement.classList.add('hidden');
+   videoElement.classList.remove('hidden');
+   imageElement.src = '';
+});
+
+

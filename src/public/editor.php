@@ -18,11 +18,59 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
     
     <!-- Load style from ../app/css/signin.css -->
     <link rel="stylesheet" href="../app/css/navbar.css">
+    <link rel="stylesheet" href="../app/css/editor.css">
 </head>
 <body>
     <? require_once 'components/navbar.php'; ?>
 
-    <h1>Welcome to the editor page</h1>
+    <main>
+        <h1>Welcome to the editor page</h1>
 
+        <? require_once 'components/stickers-list.php'; ?>
+
+        <p id="log_error"></p>
+        <input type="file" id="stickerFile" accept="image/*" hidden>
+        <input type="file" id="imageFile" accept="image/*" hidden>
+
+        <div class="container">
+
+            <div id="video_container">
+                <video id="videoElement" autoplay></video>
+                <img id="imageElement" src="" alt="Background" class="hidden" />
+                
+                <!-- StickerElement -->
+                <img id="stickerElement" src="" alt="Sticker" style="display: none;">
+
+                <div id="buttons">
+                    <button id="upStickerButton">
+                        <img src="../app/media/icon-add-sticker.png" alt="Sticker">
+                        Add sticker
+                    </button>
+
+                    <button id="upImageButton">
+                        <img src="../app/media/icon-add-image.png" alt="Image">
+                        Add image
+                    </button>
+
+                    <button id="captureButton">
+                        <img src="../app/media/icon-take-photo.png" alt="Camera">
+                        Take photo
+                    </button>
+                </div>
+            </div>
+            
+            <div class="left_bar">
+                <h2>Previous images</h2>
+                <div id="previous_images">
+                    <p>
+                        No previous images
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Load script from ../app/js/editor.js -->
+    <script src="../app/js/editor.js" defer></script>
 </body>
 </html>
