@@ -23,7 +23,7 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
 <body>
     <? require_once 'components/navbar.php'; ?>
     <?
-        if (!$_GET || !$_GET['user']) {
+        if (!$_GET || (isset($_GET['user']) && !$_GET['user'])) {
             require_once 'components/scroll-mode.php';
         }
     ?>

@@ -113,6 +113,12 @@ startVideoStream();
 captureButton.addEventListener('click', () => {
   const canvas = document.createElement('canvas');
 
+  // Check if video is recording or image is displayed
+  if (imageElement.classList.contains('hidden') && videoElement.srcObject === null) {
+    logError.innerHTML = 'Please take a picture or select an image before taking a picture';
+    return;
+  }
+
   if (videoElement.classList.contains('hidden')) {
     canvas.width = imageElement.width;
     canvas.height = imageElement.height;
@@ -250,6 +256,12 @@ function drag(event) {
 }
 
 const toggleDrag = (event) => {
+  // Check if video is recording or image is displayed
+  if (imageElement.classList.contains('hidden') && videoElement.srcObject === null) {
+    logError.innerHTML = 'Please take a picture or select an image before moving the sticker';
+    return;
+  }
+  
   isDragging = !isDragging;
 
   if (isDragging) {
