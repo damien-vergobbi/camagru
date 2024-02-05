@@ -20,8 +20,7 @@ const startVideoStream = () => {
     videoElement.play();
   })
   .catch((error) => {
-    console.error('Error accessing webcam:', error);
-    logError.innerHTML = 'Please allow access to your camera and microphone to use this feature';
+    logError.innerHTML = 'Please allow access to your camera and microphone to use this feature or click on "Add image".';
   });
 }
 
