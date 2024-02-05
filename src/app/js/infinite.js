@@ -95,7 +95,6 @@ const renderItem = (id, url, username, likes, comments, liked) => {
 
 
 function loadMore() {
-    console.log('Chargement en cours');
     if (isLoading) {
         return;
     }
@@ -112,8 +111,6 @@ function loadMore() {
 
             const elements = JSON.parse(xhr.responseText);
             const current = document.querySelectorAll('.item-div').length;
-
-            console.log(elements)
 
             if (elements.length === 0 && current === 0) {
                 const noPost = document.createElement('p');
@@ -137,17 +134,13 @@ function loadMore() {
                 });
                 
                 page++;
-            } else {
-                console.error('Erreur lors du chargement :', xhr.status);
             }
             hideLoader();
         } catch (e) {
-            console.error('Erreur lors du chargement :', e);
             hideLoader();
         }
     };
     xhr.onerror = function() {
-        console.error('Erreur réseau lors du chargement.');
         hideLoader();
     };
     xhr.send();

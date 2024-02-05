@@ -60,8 +60,6 @@ document.getElementById("confirm-form").addEventListener("submit", function(even
                         return;
                     }
 
-                    console.log(xhr.responseText);
-
                     const text = JSON.parse(xhr.responseText);
 
                     if (text?.status === "success") {
@@ -73,8 +71,6 @@ document.getElementById("confirm-form").addEventListener("submit", function(even
                     }
                 }
             } catch (error) {
-                console.error(error);
-
                 // Enable submit button
                 document.getElementById("submit-btn").disabled = false;
                 document.getElementById("submit-btn").classList.remove("hidden");
@@ -86,8 +82,6 @@ document.getElementById("confirm-form").addEventListener("submit", function(even
         };
         xhr.send("email=" + encodeURIComponent(email) + "&token=" + encodeURIComponent(token));
     } catch (e) {
-        console.error(e);
-
         document.getElementById("log-error").innerHTML = "An error occurred. Please try again.";
 
         // Enable submit button

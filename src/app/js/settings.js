@@ -95,8 +95,6 @@ document.getElementById("settings-form").addEventListener("submit", function(eve
                         return;
                     }
 
-                    console.log(xhr.responseText);
-
                     const text = JSON.parse(xhr.responseText);
 
                     if (text?.status === "success") {
@@ -104,8 +102,6 @@ document.getElementById("settings-form").addEventListener("submit", function(eve
                         document.getElementById("success-log").classList.remove("hidden");
                     } else {
                         // Error
-                        console.error(xhr.responseText);
-
                         if (text?.message && !text?.field) {
                             document.getElementById("log-error").innerHTML = text.message;
                         }
@@ -119,8 +115,6 @@ document.getElementById("settings-form").addEventListener("submit", function(eve
                     }
                 }
             } catch (e) {
-                console.error(e);
-
                 // Enable submit button
                 document.getElementById("submit-btn").disabled = false;
                 document.getElementById("submit-btn").classList.remove("hidden");
@@ -131,8 +125,6 @@ document.getElementById("settings-form").addEventListener("submit", function(eve
         };
         xhr.send("email=" + encodeURIComponent(email) + "&username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password) + "&notif=" + notif + "&user_id=" + userID);
     } catch (e) {
-        console.error(e);
-
         document.getElementById("log-error").innerHTML = "An error occurred. Please try again.";
 
         // Enable submit button

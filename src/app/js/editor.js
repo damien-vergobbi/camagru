@@ -69,8 +69,6 @@ const uploadImage = (dataURL) => {
             return;
           }
 
-          
-          console.log(xhr.responseText);
           const text = JSON.parse(xhr.responseText);
 
           if (text?.path) {
@@ -95,20 +93,17 @@ const uploadImage = (dataURL) => {
           }
         }
       } catch (error) {
-        console.error(error);
-
         if (error?.message) {
           logError.innerHTML = error?.message;
         }
       }
     };
     xhr.onerror = function(error) {
-      console.error(error);
       logError.innerHTML = "An error occurred. Please try again.";
     }
     xhr.send(formData);
   } catch (error) {
-    console.error(error);
+    logError.innerHTML = "An error occurred. Please try again.";
   }
 };
 

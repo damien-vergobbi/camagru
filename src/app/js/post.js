@@ -44,7 +44,6 @@ function getDatas() {
       const infos = JSON.parse(xhr.responseText);
 
       if (!infos || infos['error']) {
-        console.error('Erreur lors du chargement :', infos['error']);
         hideLoader();
 
         // Redirect to feed
@@ -128,17 +127,13 @@ function getDatas() {
             deleteButton.classList.add('hidden');
           }
         }
-      } else {
-        console.error('Erreur lors du chargement :', xhr.status);
       }
       hideLoader();
     } catch (e) {
-      console.error('Erreur lors du chargement :', e);
       hideLoader();
     }
   };
   xhr.onerror = function() {
-    console.error('Erreur réseau lors du chargement.');
     hideLoader();
   };
   xhr.send();
@@ -197,7 +192,6 @@ function reloadDatas() {
       const infos = JSON.parse(xhr.responseText);
 
       if (!infos || infos['error']) {
-        console.error('Erreur lors du chargement :', infos['error']);
         hideLoader();
 
         // Redirect to feed
@@ -259,11 +253,9 @@ function reloadDatas() {
         if (commentsList && comments.length === 0) {
           commentsList.innerHTML = '<p>No comments yet.</p>';
         }
-      } else {
-        console.error('Erreur lors du chargement :', xhr.status);
       }
     } catch (e) {
-      console.error('Erreur lors du chargement :', e);
+      // console.error('Error:', e);
     }
   };
   xhr.send();
@@ -321,7 +313,6 @@ if (likeButton && !likeButton.classList.contains('not_logged')) {
         const response = JSON.parse(xhr.responseText);
 
         if (response.error) {
-          console.error('Erreur lors du chargement :', response.error);
           return;
         }
 
@@ -331,7 +322,7 @@ if (likeButton && !likeButton.classList.contains('not_logged')) {
           likeButton.classList.remove('liked');
         }
       } catch (e) {
-        console.error('Erreur lors du chargement :', e);
+        // console.error('Error:', e);
       }
     };
     xhr.send(`id=${postId}`);
@@ -386,7 +377,6 @@ if (commentForm) {
         const response = JSON.parse(xhr.responseText);
 
         if (response.error) {
-          console.error('Erreur lors du chargement :', response.error);
           return;
         }
 
@@ -397,7 +387,7 @@ if (commentForm) {
         // Reload datas
         reloadDatas();
       } catch (e) {
-        console.error('Erreur lors du chargement :', e);
+        // console.error('Error:', e);
       }
     };
     xhr.send(`id=${postId}&comment=${comment}`);
@@ -417,12 +407,9 @@ if (deleteButton) {
           throw new Error('Erreur lors du chargement');
         }
 
-        console.log(xhr.responseText);
-
         const response = JSON.parse(xhr.responseText);
 
         if (response.error) {
-          console.error('Erreur lors du chargement :', response.error);
           return;
         }
 
@@ -433,7 +420,7 @@ if (deleteButton) {
           window.location.href = 'index.php';
         }
       } catch (e) {
-        console.error('Erreur lors du chargement :', e);
+        // console.error('Error:', e);
       }
     };
     xhr.send(`id=${postId}`);

@@ -60,8 +60,6 @@ document.getElementById("signin-form").addEventListener("submit", function(event
                         return;
                     }
 
-                    console.log(xhr.responseText);
-
                     const text = JSON.parse(xhr.responseText);
 
                     if (text?.status === "success") {
@@ -73,8 +71,6 @@ document.getElementById("signin-form").addEventListener("submit", function(event
                     }
                 }
             } catch (error) {
-                console.error(error);
-
                 if (error?.message) {
                     document.getElementById("log-error").innerHTML = error?.message;
                 }
@@ -89,8 +85,6 @@ document.getElementById("signin-form").addEventListener("submit", function(event
         };
         xhr.send("username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password));
     } catch (e) {
-        console.error(e);
-
         document.getElementById("log-error").innerHTML = "An error occurred. Please try again.";
 
         // Enable submit button
@@ -155,8 +149,6 @@ document.getElementById("recover-link").addEventListener("click", function(event
                         return;
                     }
 
-                    console.log(xhr.responseText);
-
                     const text = JSON.parse(xhr.responseText);
 
                     if (xhr.status === 200 && text?.status === "success") {
@@ -168,8 +160,6 @@ document.getElementById("recover-link").addEventListener("click", function(event
                     }
                 } 
             } catch (error) {
-                console.error(error);
-
                 // Enable submit button
                 document.getElementById("recover-link").disabled = false;
                 document.getElementById("recover-link").classList.remove("hidden");
@@ -186,8 +176,6 @@ document.getElementById("recover-link").addEventListener("click", function(event
         };
         xhr.send("email=" + encodeURIComponent(username));
     } catch (e) {
-        console.error(e);
-
         document.getElementById("log-error").innerHTML = "An error occurred. Please try again.";
 
         // Enable submit button
