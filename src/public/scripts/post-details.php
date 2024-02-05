@@ -1,9 +1,27 @@
 <?php
 session_start();
+
 // Get id
 $post_id = $_GET['id'];
 
 $IsLogged = isset($_SESSION['user_id']);
+
+$envFile = __DIR__ . '/../../.env';
+
+if (file_exists($envFile)) {
+  $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+  foreach ($lines as $line) {
+    if (strpos($line, '=') !== false) {
+      list($key, $value) = explode('=', $line, 2);
+      $key = trim($key);
+      $value = trim($value);
+
+      // Remove " from value
+      $value = str_replace('"', '', $value);
+      putenv("$key=$value");
+    }
+  }
+}
 
 try {
   $pdo = require_once '../../config/db.php';
@@ -56,6 +74,11 @@ try {
 
     $like = $stmt->fetch();
   }
+
+  $prefixPath = "http://" . getenv('SERVER_IP') . ":80/posts/";
+
+  // Add the full path to the image
+  $post['post_image'] = $prefixPath . $post['post_image'];
 
   echo json_encode([
     'post' => $post,

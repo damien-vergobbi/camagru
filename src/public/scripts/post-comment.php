@@ -71,7 +71,7 @@ try {
 
   if (intval($post_user['user_mails']) === 1) {
     // Send mail
-    sendCommentMail($post_user['user_email'], $post_user['user_name'], $post_id, $post['post_image'], $_SESSION['user_name'], $comment);
+    sendCommentMail($post_user['user_email'], $post_user['user_name'], $post_id, $_SESSION['user_name'], $comment);
   }
 
   echo json_encode([

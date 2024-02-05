@@ -24,6 +24,92 @@ const startVideoStream = () => {
   });
 }
 
+// Fonction pour convertir une data URL en objet Blob
+function dataURLtoBlob(dataURL) {
+  const parts = dataURL.split(';base64,');
+  const contentType = parts[0].split(':')[1];
+  const raw = window.atob(parts[1]);
+  const rawLength = raw.length;
+  const uInt8Array = new Uint8Array(rawLength);
+
+  for (let i = 0; i < rawLength; ++i) {
+      uInt8Array[i] = raw.charCodeAt(i);
+  }
+
+  return new Blob([uInt8Array], { type: contentType });
+}
+
+
+const uploadImage = (dataURL) => {
+  try {
+    const xhr = new XMLHttpRequest();
+
+    // Create new file and send it to the server
+    const formData = new FormData();
+    formData.append('imageData', dataURLtoBlob(dataURL), 'image.png');
+
+    xhr.open('POST', '/scripts/upload.php', true);
+    xhr.onreadystatechange = function() {
+      try {
+        if (xhr.readyState === XMLHttpRequest.UNSENT) {
+          // Error
+          logError.innerHTML = "An error occurred. Please try again.";
+          return;
+        }
+
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          // // Stop loader
+          // document.getElementById("loader-wrapper").classList.add("hidden");
+
+          if (xhr.status !== 200) {
+            // Error
+            logError.innerHTML = "An error occurred. Please try again.";
+            return;
+          }
+
+          
+          console.log(xhr.responseText);
+          const text = JSON.parse(xhr.responseText);
+
+          if (text?.path) {
+            // Success
+            const imageElt = new Image();
+            imageElt.src = text.path;
+            imageElt.width = 200;
+            imageElt.height = 150;
+            
+            const imageContainer = document.getElementById('previous_images');
+
+            // Remove <p> tag if no image
+            if (imageContainer.querySelector('p')) {
+              imageContainer.querySelector('p').remove();
+            }
+
+            // Append before the first child
+            imageContainer.insertBefore(imageElt, imageContainer.firstChild);
+          } else {
+            // Error
+            throw new Error(JSON.parse(xhr.responseText).error || xhr.responseText);
+          }
+        }
+      } catch (error) {
+          console.error(error);
+
+          // Enable submit button
+          // document.getElementById("submit-btn").disabled = false;
+          // document.getElementById("submit-btn").classList.remove("hidden");
+
+          if (error?.message) {
+            logError.innerHTML = error?.message;
+          }
+      }
+    };
+    xhr.send(formData);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 // Start video stream when videoElement is loaded
 startVideoStream();
 
@@ -62,21 +148,24 @@ captureButton.addEventListener('click', () => {
   
   const dataURL = canvas.toDataURL('image/png');
   
-  // Créez une nouvelle image avec la capture
-  const imageElt = new Image();
-  imageElt.src = dataURL;
-  imageElt.width = 200;
-  imageElt.height = 150;
+  // // Créez une nouvelle image avec la capture
+  // const imageElt = new Image();
+  // imageElt.src = dataURL;
+  // imageElt.width = 200;
+  // imageElt.height = 150;
   
-  const imageContainer = document.getElementById('previous_images');
+  // const imageContainer = document.getElementById('previous_images');
 
-  // Remove <p> tag if no image
-  if (imageContainer.querySelector('p')) {
-    imageContainer.querySelector('p').remove();
-  }
+  // // Remove <p> tag if no image
+  // if (imageContainer.querySelector('p')) {
+  //   imageContainer.querySelector('p').remove();
+  // }
 
-  // Append before the first child
-  imageContainer.insertBefore(imageElt, imageContainer.firstChild);
+  // // Append before the first child
+  // imageContainer.insertBefore(imageElt, imageContainer.firstChild);
+
+  // Upload image
+  uploadImage(dataURL);
 });
 
 const imageBack = () => {

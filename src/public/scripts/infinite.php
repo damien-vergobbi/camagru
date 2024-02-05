@@ -1,6 +1,23 @@
 <?php
 session_start();
 
+$envFile = __DIR__ . '/../../.env';
+
+if (file_exists($envFile)) {
+  $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+  foreach ($lines as $line) {
+    if (strpos($line, '=') !== false) {
+      list($key, $value) = explode('=', $line, 2);
+      $key = trim($key);
+      $value = trim($value);
+
+      // Remove " from value
+      $value = str_replace('"', '', $value);
+      putenv("$key=$value");
+    }
+  }
+}
+
 $pdo = require_once '../../config/db.php';
 
 // Get current page from the URL
@@ -54,10 +71,11 @@ foreach ($images as $image) {
     $stmt->execute();
     $likes = $stmt->fetch();
 
+    $prefixPath = "http://" . getenv('SERVER_IP') . ":80/posts/";
 
     $list[] = [
         'post_id' => $image['post_id'],
-        'post_image' => $image['post_image'],
+        'post_image' => $prefixPath . $image['post_image'],
         'post_user_name' => $image['post_user_name'],
         'like_count' => $likes['like_count'],
         'comment_count' => $comments['comment_count'],

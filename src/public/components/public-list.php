@@ -1,10 +1,28 @@
 <?php
+$envFile = __DIR__ . '/../../.env';
+
+if (file_exists($envFile)) {
+  $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+  foreach ($lines as $line) {
+    if (strpos($line, '=') !== false) {
+      list($key, $value) = explode('=', $line, 2);
+      $key = trim($key);
+      $value = trim($value);
+
+      // Remove " from value
+      $value = str_replace('"', '', $value);
+      putenv("$key=$value");
+    }
+  }
+}
+
 
 function renderItem($id, $url, $username, $likes, $comments, $liked) {
   $imageUrl = $liked ? '../app/media/icon-like-fill.png' : '../app/media/icon-like.png';
+  $prefixPath = "http://" . getenv('SERVER_IP') . ":80/posts/";
 
   echo '<a href="/post.php?id='.$id.'" id="post-'.$id.'" class="item-div" title="Click to see this post from '.$username.'">';
-  echo '<img src="' . $url . '" alt="Logo Camagru">';
+  echo '<img src="' . $prefixPath . $url . '" alt="Post">';
   echo '<div class="item-footer">';
   echo '<div>';
   echo '<img src="../app/media/icon-user.png" alt="User" height="20" width="20">';

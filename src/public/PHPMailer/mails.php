@@ -26,7 +26,7 @@ if (file_exists($envFile)) {
 }
 
 
-function sendCommentMail($recipientMail, $recipientUsername, $postID, $postImageUrl, $poster, $postComment) {
+function sendCommentMail($recipientMail, $recipientUsername, $postID, $poster, $postComment) {
   $mail = new PHPMailer();
 
   $sender = getenv('MAIL_NAME');
@@ -57,7 +57,6 @@ function sendCommentMail($recipientMail, $recipientUsername, $postID, $postImage
         <h1>Camagru</h1>
         <p>Hi ' . $recipientUsername . ',</p>
         <p><span style="text-transform:uppercase;font-weight:700;">'.$poster.'</span> commented your post:</p>
-        <img src="' . $postImageUrl . '" alt="Post image" width="200" height="200">
         <p style="border:1px solid #aaa;border-radius:10px;padding: 1rem 2rem;width:fit-content;">' . $postComment . '</p>
         <a href="'.$url.'">See the post</a>
       </body>
