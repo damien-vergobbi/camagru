@@ -35,6 +35,14 @@ try {
     throw new Exception('Post not found');
   }
 
+  // Delete file
+  $uploadDirectory = '../posts/';
+  $fileName = $uploadDirectory . $post['post_image'];
+
+  if (file_exists($fileName)) {
+    unlink($fileName);
+  }
+
   // Delete post
   $stmt = $pdo->prepare('DELETE FROM posts WHERE post_id = :post_id');
   $stmt->bindValue(':post_id', $post_id, PDO::PARAM_INT);

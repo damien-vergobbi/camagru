@@ -28,51 +28,54 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
 
         <? require_once 'components/stickers-list.php'; ?>
 
-        <p id="log_error"></p>
-        <input type="file" id="stickerFile" accept="image/*" hidden>
-        <input type="file" id="imageFile" accept="image/*" hidden>
+        <?php if (IS_LOGGED): ?>
+            <p id="log_error"></p>
+            <input type="file" id="stickerFile" accept="image/*" hidden>
+            <input type="file" id="imageFile" accept="image/*" hidden>
 
-        <div class="container">
+            <div class="container">
+                <div id="video_container">
+                    <video id="videoElement" autoplay></video>
+                    <img id="imageElement" src="" alt="Background" class="hidden" />
+                    
+                    <!-- StickerElement -->
+                    <img id="stickerElement" src="" alt="Sticker" style="display: none;">
 
-            <div id="video_container">
-                <video id="videoElement" autoplay></video>
-                <img id="imageElement" src="" alt="Background" class="hidden" />
+                    <div id="buttons">
+                        <button id="upStickerButton">
+                            <img src="../app/media/icon-add-sticker.png" alt="Sticker">
+                            Add sticker
+                        </button>
+
+                        <button id="upImageButton">
+                            <img src="../app/media/icon-add-image.png" alt="Image">
+                            Add image
+                        </button>
+
+                        <button id="delImageButton" class="hidden">
+                            <img src="../app/media/icon-delete.png" alt="Image">
+                            Clear image
+                        </button>
+
+                        <button id="captureButton">
+                            <img src="../app/media/icon-take-photo.png" alt="Camera">
+                            Take photo
+                        </button>
+                    </div>
+                </div>
                 
-                <!-- StickerElement -->
-                <img id="stickerElement" src="" alt="Sticker" style="display: none;">
-
-                <div id="buttons">
-                    <button id="upStickerButton">
-                        <img src="../app/media/icon-add-sticker.png" alt="Sticker">
-                        Add sticker
-                    </button>
-
-                    <button id="upImageButton">
-                        <img src="../app/media/icon-add-image.png" alt="Image">
-                        Add image
-                    </button>
-
-                    <button id="delImageButton" class="hidden">
-                        <img src="../app/media/icon-delete.png" alt="Image">
-                        Clear image
-                    </button>
-
-                    <button id="captureButton">
-                        <img src="../app/media/icon-take-photo.png" alt="Camera">
-                        Take photo
-                    </button>
+                <div class="left_bar">
+                    <h2>Previous images</h2>
+                    <div id="previous_images">
+                        <p>
+                            No previous images
+                        </p>
+                    </div>
                 </div>
             </div>
-            
-            <div class="left_bar">
-                <h2>Previous images</h2>
-                <div id="previous_images">
-                    <p>
-                        No previous images
-                    </p>
-                </div>
-            </div>
-        </div>
+        <?php else: ?>
+            <a href="/signin.php">Sign in</a>
+        <?php endif; ?>
     </main>
 
     <!-- Load script from ../app/js/editor.js -->
