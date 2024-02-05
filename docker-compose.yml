@@ -38,6 +38,8 @@ services:
     volumes:
       - ./src:/var/www/html
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    logging:
+      driver: none
 
   php:
     build:
@@ -51,3 +53,5 @@ services:
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME}
       - DB_PASS=${DB_PASS}
+    logging:
+      driver: none

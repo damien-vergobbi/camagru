@@ -22,7 +22,7 @@ $token = $_GET['token'] ?? '';
     <main>
         <div class="side-div">
             <img
-                src="https://via.placeholder.com/350"
+                src="../app/media/preview.png"
                 alt="Logo Camagru"    
             >
         </div>

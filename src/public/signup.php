@@ -20,6 +20,13 @@ session_destroy();
 </head>
 <body>
     <main>
+        <div class="side-div">
+            <img
+                src="../app/media/preview2.png"
+                alt="Logo Camagru"    
+            >
+        </div>
+
         <div class="main-div">
             <div class="form-div">
                 <h1>Camagru</h1>
