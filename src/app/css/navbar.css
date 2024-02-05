@@ -86,6 +86,12 @@ nav .brand-logo {
   font-family: "Lobster", sans-serif;
 }
 
+@media screen and (max-width: 992px) {
+  nav .brand-logo {
+    font-size: 1.5rem;
+  }
+}
+
 nav img {
   height: 25px;
   width: 25px;
