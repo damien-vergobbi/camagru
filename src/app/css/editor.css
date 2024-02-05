@@ -39,16 +39,17 @@ main #log_error:empty {
   display: none;
 }
 
-main  #stickers_list {
+main #stickers_list {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 
-  width: 100%;
+  width: auto;
+  max-width: 100%;
   height: 100%;
   margin: 2rem 0;
-  padding: 0;
+  padding: 0 1rem;
   overflow-x: auto;
   overflow-y: hidden;
 
@@ -57,7 +58,7 @@ main  #stickers_list {
 }
 
 /* HIDE RADIO */
-main  #stickers_list [type=radio] { 
+main #stickers_list [type=radio] { 
   position: absolute;
   opacity: 0;
   width: 0;
@@ -65,7 +66,7 @@ main  #stickers_list [type=radio] {
 }
 
 /* IMAGE STYLES */
-main  #stickers_list [type=radio] + img {
+main #stickers_list [type=radio] + img {
   cursor: pointer;
   background-color: #ddd;
   border-radius: 10px;
@@ -78,7 +79,7 @@ main  #stickers_list [type=radio] + img {
   transition: all 0.3s;
 }
 
-main  #stickers_list [type=radio] + img:hover {
+main #stickers_list [type=radio] + img:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
