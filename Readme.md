@@ -11,3 +11,9 @@
   - docker system prune -af
   - docker volume prune -f
   - docker-compose up -d --build
+
+# Add domain to white list
+  - Go to chrome://flags/#unsafely-treat-insecure-origin-as-secure
+  - Add http://DOMAIN
+  - Enable the flag
+  - Restart Chrome
