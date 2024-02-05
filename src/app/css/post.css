@@ -37,6 +37,10 @@ main #comments h2 {
   font-size: 1.3rem;
 }
 
+main #comments img {
+  margin: 0;
+}
+
 main #post_username {
   font-weight: bold;
   text-transform: uppercase;
