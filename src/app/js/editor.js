@@ -14,6 +14,11 @@ const stopVideoStream = () => {
 }
 
 const startVideoStream = () => {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    logError.innerHTML = 'Your browser does not support the camera feature. Please use a modern browser or click on "Add image".';
+    return;
+  }
+
   navigator.mediaDevices.getUserMedia({ video: true })
   .then((stream) => {
     videoElement.srcObject = stream;
@@ -58,9 +63,6 @@ const uploadImage = (dataURL) => {
         }
 
         if (xhr.readyState === XMLHttpRequest.DONE) {
-          // // Stop loader
-          // document.getElementById("loader-wrapper").classList.add("hidden");
-
           if (xhr.status !== 200) {
             // Error
             logError.innerHTML = "An error occurred. Please try again.";
@@ -93,17 +95,17 @@ const uploadImage = (dataURL) => {
           }
         }
       } catch (error) {
-          console.error(error);
+        console.error(error);
 
-          // Enable submit button
-          // document.getElementById("submit-btn").disabled = false;
-          // document.getElementById("submit-btn").classList.remove("hidden");
-
-          if (error?.message) {
-            logError.innerHTML = error?.message;
-          }
+        if (error?.message) {
+          logError.innerHTML = error?.message;
+        }
       }
     };
+    xhr.onerror = function(error) {
+      console.error(error);
+      logError.innerHTML = "An error occurred. Please try again.";
+    }
     xhr.send(formData);
   } catch (error) {
     console.error(error);
@@ -148,22 +150,6 @@ captureButton.addEventListener('click', () => {
   
   const dataURL = canvas.toDataURL('image/png');
   
-  // // Créez une nouvelle image avec la capture
-  // const imageElt = new Image();
-  // imageElt.src = dataURL;
-  // imageElt.width = 200;
-  // imageElt.height = 150;
-  
-  // const imageContainer = document.getElementById('previous_images');
-
-  // // Remove <p> tag if no image
-  // if (imageContainer.querySelector('p')) {
-  //   imageContainer.querySelector('p').remove();
-  // }
-
-  // // Append before the first child
-  // imageContainer.insertBefore(imageElt, imageContainer.firstChild);
-
   // Upload image
   uploadImage(dataURL);
 });
