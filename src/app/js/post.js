@@ -303,6 +303,8 @@ if (likeButton && !likeButton.classList.contains('not_logged')) {
 
       // Update image url
       likeImage.src = '../app/media/icon-like-fill.png';
+
+      reloadDatas();
     }
 
     const xhr = new XMLHttpRequest();

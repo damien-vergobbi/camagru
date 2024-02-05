@@ -247,3 +247,59 @@ main > .container > .left_bar img {
   width: 100%;
   height: auto;
 }
+
+@media screen and (max-width: 768px) {
+  main {
+    width: 90%;
+  }
+
+  main h1 {
+    font-size: 1.5rem;
+  }
+
+  main > .container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    height: auto;
+    width: 100%;
+    margin: 2rem auto;
+  }
+  
+  main #stickers_list [type=radio] + img {
+    width: 3.5rem;
+  }
+
+  main #video_container {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  main #video_container #buttons {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    transform: none;
+  }
+
+  main > .container > .left_bar {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  main > .container #previous_images a {
+    width: 80%;
+  }
+
+  main > .container > .left_bar img {
+    width: 100%;
+    overflow: hidden;
+    padding: 0;
+    margin: 1.2rem 0;
+  }
+
+  main > .container > .left_bar h2 {
+    font-size: 1.2rem;
+  }
+}
