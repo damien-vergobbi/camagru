@@ -2,20 +2,19 @@ NAME				= camagru
 YML_FILE		= docker-compose.yml
 ENV_FILE		= ./src/.env
 
-all: tail
-# 	./node_modules/@babel/cli/bin/babel.js ./src/public/js/main.js --out-file ./src/public/js/script.js
+all: build
 
-run:
-	docker-compose -p $(NAME) -f $(YML_FILE) --env-file $(ENV_FILE) up -d --build
-
-tail:
+build:
 	docker-compose -p $(NAME) -f $(YML_FILE) --env-file $(ENV_FILE) up --build
 
-down:
-	docker-compose -p $(NAME) -f $(YML_FILE) down
+stop:
+	docker-compose -p $(NAME) -f $(YML_FILE) -env-file $(ENV_FILE) stop
 
-clean:
+down:
+	docker-compose -p $(NAME) -f $(YML_FILE) -env-file $(ENV_FILE) down
+
+clean: down
 	docker system prune -af
 	docker volume prune -f
 
-.PHONY: all dev down devdown
+.PHONY: all build stop down clean
