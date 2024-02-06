@@ -21,7 +21,7 @@ if (file_exists($envFile)) {
 }
 
 function renderItem($id, $url) {
-  $prefixPath = "http://" . getenv('SERVER_IP') . ":" . getenv('SERVER_PORT') . "/posts/";
+  $prefixPath = "http://" . getenv('SRVR_IP') . ":" . getenv('SRVR_PORT') . "/posts/";
   
   echo '<a href="/post.php?id=' . $id . '">';
   echo '<img src="' .  $prefixPath . $url . '" alt="Post" width="200" height="150" onerror="if (this.src !== \'../app/media/error404.png\') this.src = \'../app/media/error404.png\';">';

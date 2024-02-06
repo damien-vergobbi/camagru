@@ -25,7 +25,6 @@ if (file_exists($envFile)) {
   }
 }
 
-
 function sendCommentMail($recipientMail, $recipientUsername, $postID, $poster, $postComment) {
   $mail = new PHPMailer();
 
@@ -47,9 +46,9 @@ function sendCommentMail($recipientMail, $recipientUsername, $postID, $poster, $
   $mail->addAddress($recipientMail, $recipientUsername);
   $mail->Subject = 'New comment on your post';
 
-  $server_ip = getenv('SERVER_IP') . ':' . getenv('SERVER_PORT');
+  $SRVR_IP = getenv('SRVR_IP') . ':' . getenv('SRVR_PORT');
 
-  $url = "http://$server_ip/post.php?id=$postID";
+  $url = "http://$SRVR_IP/post.php?id=$postID";
   
   $mail->Body = '
     <html>
@@ -89,14 +88,15 @@ function sendTokenMail($recipientMail, $recipientUsername, $token) {
   $mail->addAddress($recipientMail, $recipientUsername);
   $mail->Subject = 'Camagru - Confirm your email';
 
-  $server_ip = getenv('SERVER_IP') . ':' . getenv('SERVER_PORT');
+  $SRVR_IP = getenv('SRVR_IP') . ':' . getenv('SRVR_PORT');
 
-  $url = "http://$server_ip/confirm.php?token=$token&email=$recipientMail";
+  $url = "http://$SRVR_IP/confirm.php?token=$token&email=$recipientMail";
 
   $mail->Body = '
     <html>
       <body>
         <h1>Camagru</h1>
+        <p>IP:' . $SRVR_IP . '</p>
         <p>Hi ' . $recipientUsername . ',</p>
         <p>Thanks for signing up!</p>
         <p>Click the link below to confirm your email address:</p>
@@ -131,9 +131,9 @@ function sendRecoverMail($recipientMail, $username, $token) {
   $mail->addAddress($recipientMail, $username);
   $mail->Subject = 'Camagru - Recover your password';
 
-  $server_ip = getenv('SERVER_IP') . ':' . getenv('SERVER_PORT');
+  $SRVR_IP = getenv('SRVR_IP') . ':' . getenv('SRVR_PORT');
 
-  $url = "http://$server_ip/recover.php?token=$token&email=$recipientMail";
+  $url = "http://$SRVR_IP/recover.php?token=$token&email=$recipientMail";
 
   $mail->Body = '
     <html>

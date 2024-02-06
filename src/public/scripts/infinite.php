@@ -71,7 +71,7 @@ foreach ($images as $image) {
     $stmt->execute();
     $likes = $stmt->fetch();
 
-    $prefixPath = "http://" . getenv('SERVER_IP') . ":" . getenv('SERVER_PORT') . "/posts/";
+    $prefixPath = "http://" . getenv('SRVR_IP') . ":" . getenv('SRVR_PORT') . "/posts/";
 
     $list[] = [
         'post_id' => $image['post_id'],

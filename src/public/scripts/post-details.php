@@ -82,7 +82,7 @@ try {
     $like = $stmt->fetch();
   }
 
-  $prefixPath = "http://" . getenv('SERVER_IP') . ":" . getenv('SERVER_PORT') . "/posts/";
+  $prefixPath = "http://" . getenv('SRVR_IP') . ":" . getenv('SRVR_PORT') . "/posts/";
 
   // Add the full path to the image
   $post['post_image'] = $prefixPath . $post['post_image'];
