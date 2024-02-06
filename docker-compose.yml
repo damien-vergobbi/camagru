@@ -6,7 +6,7 @@ services:
     container_name: mysql
     restart: always
     ports:
-      - 3306:3306
+      - 3342:3342
     environment:
       - MYSQL_DATABASE=${DB_NAME}
       - MYSQL_ROOT_PASSWORD=${DB_PASS}
@@ -32,7 +32,7 @@ services:
     image: nginx
     container_name: nginx
     ports:
-      - 80:80
+      - 8888:80
     depends_on:
       - php
     volumes:
