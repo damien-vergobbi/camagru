@@ -1,9 +1,6 @@
 <? // Logout user
 session_start();
 session_destroy();
-
-// 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
-
 ?>
 
 <!DOCTYPE html>
