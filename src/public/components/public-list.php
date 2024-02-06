@@ -19,7 +19,7 @@ if (file_exists($envFile)) {
 
 function renderItem($id, $url, $username, $likes, $comments, $liked) {
   $imageUrl = $liked ? '../app/media/icon-like-fill.png' : '../app/media/icon-like.png';
-  $prefixPath = "http://" . getenv('SERVER_IP') . ":80/posts/";
+  $prefixPath = "http://" . getenv('SERVER_IP') . ":" . getenv('SERVER_PORT') . "/posts/";
 
   echo '<a href="/post.php?id='.$id.'" id="post-'.$id.'" class="item-div" title="Click to see this post from '.$username.'">';
   echo '<img src="' . $prefixPath . $url . '" alt="Post" onerror="if (this.src !== \'../app/media/error404.png\') this.src = \'../app/media/error404.png\';">';

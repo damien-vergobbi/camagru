@@ -47,9 +47,9 @@ function sendCommentMail($recipientMail, $recipientUsername, $postID, $poster, $
   $mail->addAddress($recipientMail, $recipientUsername);
   $mail->Subject = 'New comment on your post';
 
-  $server_ip = getenv('SERVER_IP');
+  $server_ip = getenv('SERVER_IP') . ':' . getenv('SERVER_PORT');
 
-  $url = "http://$server_ip:80/post.php?id=$postID";
+  $url = "http://$server_ip/post.php?id=$postID";
   
   $mail->Body = '
     <html>
@@ -89,9 +89,9 @@ function sendTokenMail($recipientMail, $recipientUsername, $token) {
   $mail->addAddress($recipientMail, $recipientUsername);
   $mail->Subject = 'Camagru - Confirm your email';
 
-  $server_ip = getenv('SERVER_IP');
+  $server_ip = getenv('SERVER_IP') . ':' . getenv('SERVER_PORT');
 
-  $url = "http://$server_ip:80/confirm.php?token=$token&email=$recipientMail";
+  $url = "http://$server_ip/confirm.php?token=$token&email=$recipientMail";
 
   $mail->Body = '
     <html>
@@ -131,9 +131,9 @@ function sendRecoverMail($recipientMail, $username, $token) {
   $mail->addAddress($recipientMail, $username);
   $mail->Subject = 'Camagru - Recover your password';
 
-  $server_ip = getenv('SERVER_IP');
+  $server_ip = getenv('SERVER_IP') . ':' . getenv('SERVER_PORT');
 
-  $url = "http://$server_ip:80/recover.php?token=$token&email=$recipientMail";
+  $url = "http://$server_ip/recover.php?token=$token&email=$recipientMail";
 
   $mail->Body = '
     <html>
