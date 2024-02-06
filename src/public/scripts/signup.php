@@ -10,6 +10,11 @@ $email = $_POST['email'] ?? '';
 $username = $_POST['username'] ?? '';
 $password = $_POST['password'] ?? '';
 
+// Neutralize HTML tags
+$email = htmlspecialchars($email);
+$username = htmlspecialchars($username);
+$password = htmlspecialchars($password);
+
 // Check if email is valid
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     echo json_encode([
@@ -36,7 +41,6 @@ if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,30}$/', $password)
     ]);
     exit();
 }
-
 
 try {
     // Check if user already exists

@@ -9,6 +9,10 @@ if ($_SERVER['REQUEST_METHOD'] !== "POST") {
 $email = $_POST['email'] ?? '';
 $token = $_POST['token'] ?? '';
 
+// Neutralize HTML tags
+$email = htmlspecialchars($email);
+$token = htmlspecialchars($token);
+
 // Check if email is valid
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     echo json_encode([

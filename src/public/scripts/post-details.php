@@ -4,6 +4,13 @@ session_start();
 // Get id
 $post_id = $_GET['id'];
 
+if (!isset($post_id) || $post_id < 0 || !is_numeric($post_id)) {
+  echo json_encode([
+    'error' => 'Post id is required'
+  ]);
+  return;
+}
+
 $IsLogged = isset($_SESSION['user_id']);
 
 $envFile = __DIR__ . '/../../.env';

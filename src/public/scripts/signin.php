@@ -9,6 +9,10 @@ if ($_SERVER['REQUEST_METHOD'] !== "POST") {
 $username = $_POST['username'] ?? '';
 $password = $_POST['password'] ?? '';
 
+// Neutralize HTML tags
+$username = htmlspecialchars($username);
+$password = htmlspecialchars($password);
+
 // Check if username / email is valid
 if (!filter_var($username, FILTER_VALIDATE_EMAIL) && !preg_match('/^(?=.*[a-z])[a-z0-9_-]{3,30}$/', $username)) {
     echo json_encode([

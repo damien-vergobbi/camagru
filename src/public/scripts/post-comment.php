@@ -1,11 +1,19 @@
 <?php
 session_start();
 
+if ($_SERVER['REQUEST_METHOD'] !== "POST") {
+  header('Location: /');
+  exit();
+}
+
 try {
   // Get variables
   $post_id = intval($_POST['id']) ?? -1;
   $user_id = $_SESSION['user_id'] ?? -1;
   $comment = $_POST['comment'] ?? '';
+
+  // Neutralize HTML tags
+  $comment = htmlspecialchars($comment);
 
   $comment_regex = '/^[a-zA-Z0-9\s.,;:!?\'-éèàêâîôûùç]{3,150}$/';
 

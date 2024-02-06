@@ -12,6 +12,12 @@ $password = $_POST['password'] ?? '';
 $notif = $_POST['notif'] === "true" ? 1 : 0;
 $userID = $_POST['user_id'] ?? 0;
 
+// Neutralize HTML tags
+$email = htmlspecialchars($email);
+$username = htmlspecialchars($username);
+$password = htmlspecialchars($password);
+$userID = htmlspecialchars($userID);
+
 // Check user id
 if (!is_numeric($userID) || $userID <= 0) {
     echo json_encode([

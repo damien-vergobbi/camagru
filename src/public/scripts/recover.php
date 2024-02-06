@@ -9,6 +9,11 @@ $email = $_POST['email'] ?? '';
 $token = $_POST['token'] ?? '';
 $password = $_POST['password'] ?? '';
 
+// Neutralize HTML tags
+$email = htmlspecialchars($email);
+$token = htmlspecialchars($token);
+$password = htmlspecialchars($password);
+
 if (!filter_var($email, FILTER_VALIDATE_EMAIL) && !preg_match('/^(?=.*[a-z])[a-z0-9_-]{3,30}$/', $email)) {
   echo json_encode([
     'status' => 'error',

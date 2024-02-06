@@ -1,19 +1,24 @@
 <?php
 session_start();
 
+if ($_SERVER['REQUEST_METHOD'] !== "POST") {
+  header('Location: /');
+  exit();
+}
+
 try {
   // Get variables
   $post_id = intval($_POST['id']) ?? -1;
   $user_id = $_SESSION['user_id'] ?? -1;
 
-  if (!isset($post_id) || $post_id < 0) {
+  if (!isset($post_id) || $post_id < 0 || !is_numeric($post_id)) {
     echo json_encode([
       'error' => 'Post id is required'
     ]);
     return;
   }
 
-  if (!isset($user_id) || $user_id < 0) {
+  if (!isset($user_id) || $user_id < 0 || !is_numeric($user_id)) {
     echo json_encode([
       'error' => 'User id is required'
     ]);
