@@ -15,7 +15,7 @@ stop:
 down:
 	docker-compose -p $(NAME) -f $(YML_FILE) -env-file $(ENV_FILE) down
 
-clean: down
+clean: stop
 	docker system prune -af
 	docker volume prune -f
 	rm -rf ./src/public/posts/*
