@@ -43,6 +43,8 @@ if (isset($_FILES["imageData"]) && $_FILES["imageData"]["error"] === UPLOAD_ERR_
     }
     
     if (move_uploaded_file($tempFilePath, $uploadFilePath)) {
+      chmod($uploadFilePath, 0666);
+      
       // Insert the post in the database
       $stmt = $pdo->prepare('INSERT INTO posts (post_user_id, post_image) VALUES (:user_id, :image)');
       $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);

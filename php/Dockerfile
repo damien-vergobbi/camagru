@@ -21,10 +21,7 @@ RUN echo "log_errors = On" > /usr/local/etc/php/conf.d/log_errors.ini
 RUN echo "error_log = /var/log/php_errors.log" > /usr/local/etc/php/conf.d/error_log.ini
 
 # Right permissions to posts/ folder
-# RUN chown -R www-data:www-data /var/www
-RUN chmod -R 775 /var/www/
-RUN mkdir -p /var/www/html/public/posts
-RUN chmod g+rwX /var/www/html/public/posts
-# RUN chmod -R g+rwX /var/www
+RUN chown -R www-data:www-data /var/www
+RUN chmod -R g+rwX /var/www
 
 WORKDIR /var/www/html
