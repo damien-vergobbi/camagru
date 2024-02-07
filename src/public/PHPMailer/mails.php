@@ -96,7 +96,6 @@ function sendTokenMail($recipientMail, $recipientUsername, $token) {
     <html>
       <body>
         <h1>Camagru</h1>
-        <p>IP:' . $SRVR_IP . '</p>
         <p>Hi ' . $recipientUsername . ',</p>
         <p>Thanks for signing up!</p>
         <p>Click the link below to confirm your email address:</p>

@@ -63,13 +63,26 @@ if (isset($_FILES["imageData"]) && $_FILES["imageData"]["error"] === UPLOAD_ERR_
       throw new Exception('Failed to save the image');
     }
   } catch (Exception $e) {
-    // Échec de l'enregistrement de l'image
-    http_response_code(400);
-    echo json_encode(['error' => $e->getMessage()]);
+    echo json_encode([
+      'error' => $e->getMessage()
+    ]);
+  } catch (Throwable $e) {
+    echo json_encode([
+      'error' => 'An error occurred'
+    ]);
+  } catch (Error $e) {
+    echo json_encode([
+      'error' => 'An error occurred'
+    ]);
+  } catch (PDOException $e) {
+    echo json_encode([
+      'error' => 'An error occurred'
+    ]);
   }
 } else {
-  // Aucune donnée d'image n'a été reçue
-  http_response_code(400);
+  echo json_encode([
+    'error' => 'No image provided'
+  ]);
 }
 
 ?>

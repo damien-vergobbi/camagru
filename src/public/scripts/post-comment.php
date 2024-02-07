@@ -89,5 +89,17 @@ try {
   echo json_encode([
     'error' => 'Error: ' . $e->getMessage()
   ]);
-}
+} catch (Throwable $e) {
+  echo json_encode([
+    'error' => 'An error occurred'
+  ]);
+} catch (Error $e) {
+  echo json_encode([
+    'error' => 'An error occurred'
+  ]);
+} catch (PDOException $e) {
+  echo json_encode([
+    'error' => 'An error occurred'
+  ]);
+} 
 ?>

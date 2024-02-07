@@ -28,22 +28,33 @@ function renderItem($id, $url) {
   echo '</a>';
 }
 
-require_once '../config/db.php';
+try {
+  require_once '../config/db.php';
 
-// Get user's posts
-$stmt = $pdo->prepare('SELECT post_id, post_image FROM posts WHERE post_user_id = :user_id ORDER BY post_date DESC');
-$stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
-$stmt->execute();
-$images = $stmt->fetchAll();
+  // Get user's posts
+  $stmt = $pdo->prepare('SELECT post_id, post_image FROM posts WHERE post_user_id = :user_id ORDER BY post_date DESC');
+  $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+  $stmt->execute();
+  $images = $stmt->fetchAll();
 
 
-if (empty($images)) {
-  echo '<p>No posts yet</p>';
-  return;
-}
+  if (empty($images)) {
+    echo '<p>No posts yet</p>';
+    return;
+  }
 
-foreach ($images as $image) {
-  renderItem($image['post_id'], $image['post_image']);
+  foreach ($images as $image) {
+    renderItem($image['post_id'], $image['post_image']);
+  }
+
+} catch (Exception $e) {
+  echo '<p>' . $e->getMessage() . '</p>';
+} catch (Throwable $e) {
+  echo '<p>' . $e->getMessage() . '</p>';
+} catch (Error $e) {
+  echo '<p>' . $e->getMessage() . '</p>';
+} catch (PDOException $e) {
+  echo '<p>' . $e->getMessage() . '</p>';
 }
 
 ?>

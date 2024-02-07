@@ -64,5 +64,20 @@ try {
         'status' => 'error',
         'message' => $e->getMessage()
     ]);
+} catch (Throwable $e) {
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'An error occurred'
+    ]);
+} catch (Error $e) {
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'An error occurred'
+    ]);
+} catch (PDOException $e) {
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'An error occurred'
+    ]);
 }
 ?>
