@@ -44,14 +44,26 @@ function dataURLtoBlob(dataURL) {
   return new Blob([uInt8Array], { type: contentType });
 }
 
-
-const uploadImage = (dataURL) => {
+const uploadImage = ({
+  backgroundSettings,
+  stickerSettings,
+}) => {
   try {
     const xhr = new XMLHttpRequest();
 
     // Create new file and send it to the server
     const formData = new FormData();
-    formData.append('imageData', dataURLtoBlob(dataURL), 'image.png');
+    formData.append('backgroundWidth', backgroundSettings.width);
+    formData.append('backgroundHeight', backgroundSettings.height);
+    formData.append('backgroundX', backgroundSettings.x);
+    formData.append('backgroundY', backgroundSettings.y);
+    formData.append('stickerWidth', stickerSettings.width);
+    formData.append('stickerHeight', stickerSettings.height);
+    formData.append('stickerX', stickerSettings.x);
+    formData.append('stickerY', stickerSettings.y);
+
+    formData.append('backgroundData', dataURLtoBlob(backgroundSettings.base64), 'background.png');
+    formData.append('stickerData', dataURLtoBlob(stickerSettings.base64), 'sticker.png');
 
     xhr.open('POST', '/scripts/upload.php', true);
     xhr.onreadystatechange = function() {
@@ -121,48 +133,61 @@ document?.addEventListener('DOMContentLoaded', () => {
 });
 
 captureButton?.addEventListener('click', () => {
-  const canvas = document.createElement('canvas');
-
   // Check if video is recording or image is displayed
   if (imageElement.classList.contains('hidden') && videoElement.srcObject === null) {
     logError.innerHTML = 'Please take a picture or select an image before taking a picture';
     return;
   }
 
-  if (videoElement.classList.contains('hidden')) {
-    canvas.width = imageElement.width;
-    canvas.height = imageElement.height;
-  } else {
-    canvas.width = videoElement.offsetWidth;
-    canvas.height = videoElement.offsetHeight;
-  }
-
-  const context = canvas.getContext('2d');
-
   // Reset log error
   logError.innerHTML = '';
 
-  // Image as background or video
+  const backgroundSettings = {
+    width: videoElement.classList.contains('hidden') ? imageElement.width : videoElement.offsetWidth,
+    height: videoElement.classList.contains('hidden') ? imageElement.height : videoElement.offsetHeight,
+    x: 0,
+    y: 0,
+    base64: ''
+  };
+
+  const stickerSettings = {
+    width: stickerElement.width,
+    height: stickerElement.height,
+    x: stickerElement.offsetLeft,
+    y: stickerElement.offsetTop,
+    base64: ''
+  };
+
+  // Convert background to base64
+  const canvas = document.createElement('canvas');
+  canvas.width = backgroundSettings.width;
+  canvas.height = backgroundSettings.height;
+  const context = canvas.getContext('2d');
+
   if (videoElement.classList.contains('hidden')) {
     context.drawImage(imageElement, 0, 0, canvas.width, canvas.height);
   } else {
     context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
   }
 
-  // Get sticker and draw it on the canvas
-  const stickerElement = document.getElementById('stickerElement');
-
-  if (stickerElement.style.display === 'none' || stickerElement.src === '') {
-    logError.innerHTML = 'Please select a sticker before taking a picture';
-    return;
-  }
-
-  context.drawImage(stickerElement, stickerElement.offsetLeft, stickerElement.offsetTop, stickerElement.width, stickerElement.height);
-  
   const dataURL = canvas.toDataURL('image/png');
-  
+  backgroundSettings.base64 = dataURL;
+
+  // Convert sticker to base64
+  const stickerCanvas = document.createElement('canvas');
+  stickerCanvas.width = stickerSettings.width;
+  stickerCanvas.height = stickerSettings.height;
+  const stickerContext = stickerCanvas.getContext('2d');
+  stickerContext.drawImage(stickerElement, 0, 0, stickerCanvas.width, stickerCanvas.height);
+
+  const stickerDataURL = stickerCanvas.toDataURL('image/png');
+  stickerSettings.base64 = stickerDataURL;
+
   // Upload image
-  uploadImage(dataURL);
+  uploadImage({
+    backgroundSettings,
+    stickerSettings,
+  });
 });
 
 const imageBack = () => {
