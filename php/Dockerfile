@@ -20,5 +20,8 @@ RUN echo "display_errors = Off" > /usr/local/etc/php/conf.d/display_errors.ini
 RUN echo "log_errors = On" > /usr/local/etc/php/conf.d/log_errors.ini
 RUN echo "error_log = /var/log/php_errors.log" > /usr/local/etc/php/conf.d/error_log.ini
 
+# Right permissions to posts/ folder
+RUN chown -R www-data:www-data /var/www
+RUN chmod -R g+rwX /var/www
 
 WORKDIR /var/www/html

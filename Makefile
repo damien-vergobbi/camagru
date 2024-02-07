@@ -1,4 +1,4 @@
-NAME				= camagru
+NAME			= camagru
 YML_FILE		= docker-compose.yml
 ENV_FILE		= ./src/.env
 
@@ -6,14 +6,14 @@ all: build
 
 build:
 	mkdir -p ./src/public/posts
-	chmod 775 ./src/public/posts
-	docker-compose -p $(NAME) -f $(YML_FILE) --env-file $(ENV_FILE) up --build
+	chmod 777 ./src/public/posts
+	docker-compose -p $(NAME) -f $(YML_FILE) --env-file $(ENV_FILE) up
 
 stop:
-	docker-compose -p $(NAME) -f $(YML_FILE) -env-file $(ENV_FILE) stop
+	docker-compose -p $(NAME) -f $(YML_FILE) --env-file $(ENV_FILE) stop
 
 down:
-	docker-compose -p $(NAME) -f $(YML_FILE) -env-file $(ENV_FILE) down
+	docker-compose -p $(NAME) -f $(YML_FILE) --env-file $(ENV_FILE) down
 
 clean: stop
 	docker system prune -af
