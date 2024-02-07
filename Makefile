@@ -7,7 +7,7 @@ all: build
 build:
 	mkdir -p ./src/public/posts
 	chmod 777 ./src/public/posts
-	docker-compose -p $(NAME) -f $(YML_FILE) --env-file $(ENV_FILE) up
+	docker-compose -p $(NAME) -f $(YML_FILE) --env-file $(ENV_FILE) up --build --remove-orphans
 
 stop:
 	docker-compose -p $(NAME) -f $(YML_FILE) --env-file $(ENV_FILE) stop
