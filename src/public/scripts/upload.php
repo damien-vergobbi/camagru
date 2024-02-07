@@ -6,6 +6,9 @@ if ($_SERVER['REQUEST_METHOD'] !== "POST") {
   exit();
 }
 
+// echo exec('whoami');
+// exit;
+
 if (isset($_FILES["imageData"]) && $_FILES["imageData"]["error"] === UPLOAD_ERR_OK) {
   try {
     $user_id = $_SESSION['user_id'] ?? -1;
