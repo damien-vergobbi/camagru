@@ -92,10 +92,10 @@ function getDatas() {
             const commentDiv = document.createElement('div');
             commentDiv.className = 'comment';
             commentDiv.innerHTML = `
-              <p class="user">
+              <a class="user" href="/index.php?user=${comment.comment_user_name}">
                 <img src="../app/media/icon-user.png" alt="User" height="20" width="20">
                 ${comment.comment_user_name}
-              </p>
+              </a>
               <p>${comment.comment_text}</p>
             `;
             commentsList.appendChild(commentDiv);

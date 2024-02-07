@@ -145,12 +145,21 @@ main #comments_list .comment:not(:last-of-type) {
   border-bottom: 1px solid #ccc;
 }
 
-main #comments_list .comment p.user {
+main #comments_list .comment .user {
   font-weight: bold;
   font-size: 0.8rem;
+  padding: 0;
   padding-bottom: 0.5rem;
   text-transform: uppercase;
+
+  display: flex;
+  flex-direction: row;
   align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: auto;
+
+  cursor: pointer;
 }
 
 main #share-div {
