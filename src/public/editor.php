@@ -63,6 +63,8 @@ define('IS_LOGGED', isset($_SESSION['user_id'])
                             <img src="../app/media/icon-take-photo.png" alt="Camera">
                             Take photo
                         </button>
+
+                        <div id="sendLoader" class="loader hidden"></div>
                     </div>
                 </div>
                 

@@ -4,6 +4,7 @@ const imageElement = document.getElementById('imageElement');
 const videoContainer = document.getElementById('video_container');
 const captureButton = document.getElementById('captureButton');
 const logError = document.getElementById('log_error');
+const sendLoader = document.getElementById('sendLoader');
 
 const stopVideoStream = () => {
   if (videoElement.srcObject) {
@@ -49,6 +50,10 @@ const uploadImage = ({
   stickerSettings,
 }) => {
   try {
+    // Hide capture button and show loader
+    captureButton.classList.add('hidden');
+    sendLoader.classList.remove('hidden');
+
     const xhr = new XMLHttpRequest();
 
     // Create new file and send it to the server
@@ -109,19 +114,36 @@ const uploadImage = ({
             // Error
             throw new Error(JSON.parse(xhr.responseText).error || xhr.responseText);
           }
+
+          // Show capture button and hide loader
+          captureButton.classList.remove('hidden');
+          sendLoader.classList.add('hidden');
         }
       } catch (error) {
+        // Error
         if (error?.message) {
           logError.innerHTML = error?.message;
         }
+
+        // Show capture button and hide loader
+        captureButton.classList.remove('hidden');
+        sendLoader.classList.add('hidden');
       }
     };
     xhr.onerror = function(error) {
       logError.innerHTML = "An error occurred. Please try again.";
+
+      // Show capture button and hide loader
+      captureButton.classList.remove('hidden');
+      sendLoader.classList.add('hidden');
     }
     xhr.send(formData);
   } catch (error) {
     logError.innerHTML = "An error occurred. Please try again.";
+
+    // Show capture button and hide loader
+    captureButton.classList.remove('hidden');
+    sendLoader.classList.add('hidden');
   }
 };
 
