@@ -229,8 +229,10 @@ main > .container #previous_images {
 }
 
 main > .container #previous_images a {
-  margin: auto;
+  display: inline-block;
+  margin: 0;
   width: 70%;
+  margin: 1rem;
 }
 
 main > .container > .left_bar p {
@@ -242,7 +244,8 @@ main > .container > .left_bar img {
   background-color: #ddd;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  margin: 1rem;
+  margin: 0;
+  padding: 0;
 
   width: 100%;
   height: auto;
